@@ -1,5 +1,12 @@
+<script setup lang="ts"></script>
+
 <template>
   <div>
-    <NuxtWelcome />
+    <NuxtLayout>
+      <NuxtPage />
+      <template #fallback>
+        <div>loading</div>
+      </template>
+    </NuxtLayout>
   </div>
 </template>

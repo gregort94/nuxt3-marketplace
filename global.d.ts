@@ -1,0 +1,3 @@
+declare global {
+  gg: () => string;
+}
