@@ -3,5 +3,11 @@ import data from './products.json'
 const products: ApiProduct[] = data
 
 export default defineEventHandler((event) => {
-  return products
+  const query = getQuery(event)
+  console.log(query)
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(products)
+    }, 5000)
+  })
 })

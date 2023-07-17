@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-full">
+  <div class="h-screen">
     <nav class="border-b border-gray-200 bg-white">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AppHeader />
@@ -14,42 +14,44 @@
           <!-- Current: "border-indigo-500 bg-indigo-50 text-indigo-700", Default: "border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800" -->
           <a
             href="#"
-            class="border-indigo-500 bg-indigo-50 text-indigo-700 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
+            class="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700"
             aria-current="page"
-          >Dashboard</a>
+            >Dashboard</a
+          >
           <a
             href="#"
-            class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
-          >Team</a>
+            class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+            >Team</a
+          >
           <a
             href="#"
-            class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
-          >Projects</a>
+            class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+            >Projects</a
+          >
           <a
             href="#"
-            class="border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 block border-l-4 py-2 pl-3 pr-4 text-base font-medium"
-          >Calendar</a>
+            class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800"
+            >Calendar</a
+          >
         </div>
         <div class="border-t border-gray-200 pb-3 pt-4">
           <div class="flex items-center px-4">
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
               <img
                 class="h-10 w-10 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
-              >
+              />
             </div>
             <div class="ml-3">
-              <div class="text-base font-medium text-gray-800">
-                Tom Cook
-              </div>
+              <div class="text-base font-medium text-gray-800">Tom Cook</div>
               <div class="text-sm font-medium text-gray-500">
                 tom@example.com
               </div>
             </div>
             <button
               type="button"
-              class="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              class="ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span class="sr-only">View notifications</span>
               <svg
@@ -72,15 +74,18 @@
             <a
               href="#"
               class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-            >Your Profile</a>
+              >Your Profile</a
+            >
             <a
               href="#"
               class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-            >Settings</a>
+              >Settings</a
+            >
             <a
               href="#"
               class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-            >Sign out</a>
+              >Sign out</a
+            >
           </div>
         </div>
       </div>
