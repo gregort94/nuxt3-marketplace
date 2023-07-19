@@ -21,3 +21,4 @@ export type ThemeColor = keyof Omit<
 export const THEME_COLORS = Object.keys(colors).filter(
   (item) => !excludedColors.includes(item),
 ) as ThemeColor[]
+// f
