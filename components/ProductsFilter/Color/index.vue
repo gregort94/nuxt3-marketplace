@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { ProductColor } from '../../../enums'
+type ProductColor = string
 interface Props {
   modelValue?: ProductColor[]
 }
-const colors = ref<ProductColor[]>(ArrayFromEnum(ProductColor))
+const colors = ref<ProductColor[]>(['white', 'black'])
 const props = defineProps<Props>()
 const emit = defineEmits<{
   (event: 'update:modelValue', value: ProductColor[]): void

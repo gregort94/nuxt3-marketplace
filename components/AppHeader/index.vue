@@ -1,21 +1,35 @@
-<script lang="ts" setup></script>
+<script lang="ts">
+export default {
+  name: 'AppHeader',
+}
+</script>
 
+<script lang="ts" setup>
+const a = ref()
+</script>
+lements/ - TopHeader.vue - Product/ - - CatalogIndex.vue - для catalo - -
+CatalogCard.vue - - Card/ - - - ProductView.vue - - - Gallery.vue - Customer/ -
+- ProfileIndex.vue - - AddressBook.vue // то есть главный можно оставлять на
+уровне выше - - AddressBook/ // а дочерние класть в папку с названием родителя -
+- - AddressOne.vue
 <template>
   <div class="flex h-16 justify-between">
     <div class="flex">
-      <div class="flex flex-shrink-0 items-center">
+      <div class="flex shrink-0 items-center">
         <img
           class="block h-8 w-auto lg:hidden"
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
           alt="Your Company"
-        >
+        />
         <img
           class="hidden h-8 w-auto lg:block"
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
           alt="Your Company"
-        >
+        />
       </div>
       <PagesList />
+      <ThemeSwitcher></ThemeSwitcher>
+      <AppHeaderMenu></AppHeaderMenu>
     </div>
     <div class="hidden sm:ml-6 sm:flex sm:items-center">
       <button
@@ -54,7 +68,7 @@
               class="h-8 w-8 rounded-full"
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
-            >
+            />
           </button>
         </div>
 
@@ -82,21 +96,24 @@
             class="block px-4 py-2 text-sm text-gray-700"
             role="menuitem"
             tabindex="-1"
-          >Your Profile</a>
+            >Your Profile</a
+          >
           <a
             id="user-menu-item-1"
             href="#"
             class="block px-4 py-2 text-sm text-gray-700"
             role="menuitem"
             tabindex="-1"
-          >Settings</a>
+            >Settings</a
+          >
           <a
             id="user-menu-item-2"
             href="#"
             class="block px-4 py-2 text-sm text-gray-700"
             role="menuitem"
             tabindex="-1"
-          >Sign out</a>
+            >Sign out</a
+          >
         </div>
       </div>
     </div>

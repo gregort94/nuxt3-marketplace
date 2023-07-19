@@ -1,19 +1,20 @@
 <script lang="ts" setup>
-import { ProductColor } from '../enums'
 import { ApiProduct, ProductFilters } from 'models'
+
+const route = useRoute()
+const filters = ref<ProductFilters>(route.query)
+
 const {
   data: products,
   pending,
   execute,
 } = await useLazyFetch<ApiProduct[]>('/api/products')
 
-const filters = ref<ProductFilters>({ colors: [ProductColor.Black] })
-const { query } = useRoute()
 const router = useRouter()
-console.log(query)
-watch(filters, (value) => {
-  execute()
-})
+
+const onProductsFilterUpdate = (value) => {
+  router.push({ query: value })
+}
 </script>
 
 <template>
@@ -212,7 +213,10 @@ watch(filters, (value) => {
 
           <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
             <!-- Filters -->
-            <ProductsFilter v-model="filters"></ProductsFilter>
+            <ProductsFilter
+              v-model="filters"
+              @update:model-value="onProductsFilterUpdate"
+            ></ProductsFilter>
 
             <!-- Product grid -->
             <div class="lg:col-span-3">

@@ -1,5 +1,3 @@
-import { ProductColor } from 'enums'
-
 export interface ApiProduct {
   productId: number
   productName: string
@@ -10,5 +8,5 @@ export interface ApiProduct {
 }
 
 export interface ProductFilters {
-  colors: ProductColor[]
+  colors: string[]
 }
