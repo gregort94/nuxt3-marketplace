@@ -7,11 +7,6 @@ export default {
 <script lang="ts" setup>
 const a = ref()
 </script>
-lements/ - TopHeader.vue - Product/ - - CatalogIndex.vue - для catalo - -
-CatalogCard.vue - - Card/ - - - ProductView.vue - - - Gallery.vue - Customer/ -
-- ProfileIndex.vue - - AddressBook.vue // то есть главный можно оставлять на
-уровне выше - - AddressBook/ // а дочерние класть в папку с названием родителя -
-- - AddressOne.vue
 <template>
   <div class="flex h-16 justify-between">
     <div class="flex">
