@@ -5,5 +5,5 @@ export default defineNuxtConfig({
     assets: '/<rootDir>/assets',
   },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxthq/ui', '@nuxtjs/tailwindcss'],
+  modules: ['@nuxthq/ui', '@nuxtjs/tailwindcss', 'nuxt-headlessui'],
 })

@@ -1,5 +1,5 @@
-import { ApiProduct } from '../../models'
 import data from './products.json'
+import { ApiProduct } from '@/models'
 const products: ApiProduct[] = data
 
 export default defineEventHandler((event) => {
