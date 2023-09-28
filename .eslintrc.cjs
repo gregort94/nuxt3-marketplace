@@ -14,10 +14,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
-  plugins: ['eslint-plugin-prettier'],
   rules: {
-    'prettier/prettier': 'error',
     'no-useless-catch': 0,
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
   },
 }
