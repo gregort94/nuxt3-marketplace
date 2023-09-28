@@ -3,8 +3,8 @@ const supabase = useSupabaseClient()
 const toast = useToast()
 const router = useRouter()
 
-const logIn = async (values) => {
-  const { error } = await supabase.auth.signInWithPassword({
+const signUp = async (values) => {
+  const { error } = await supabase.auth.signUp({
     email: values.email,
     password: values.password,
   })
@@ -22,7 +22,7 @@ const logIn = async (values) => {
   <div>
     <VeeForm
       class="space-y-4"
-      @submit="logIn"
+      @submit="signUp"
     >
       <VeeField
         v-slot="{ value, handleChange, errorMessage, meta }"
@@ -42,7 +42,7 @@ const logIn = async (values) => {
       <VeeField
         v-slot="{ value, handleChange, meta, errorMessage }"
         name="password"
-        rules="required"
+        rules="required|min:6"
       >
         <UFormGroup
           :error="meta.touched && errorMessage"
@@ -58,7 +58,7 @@ const logIn = async (values) => {
         class="w-full"
         type="submit"
         block
-        >Log In</UButton
+        >Sign Up</UButton
       >
     </VeeForm>
   </div>
