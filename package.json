@@ -1,6 +1,9 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "prisma": {
+    "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
@@ -10,11 +13,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.1.0",
     "@heroicons/vue": "^2.0.18",
     "@nuxt/devtools": "latest",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/supabase": "^1.1.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@prisma/client": "^5.3.1",
     "@rushstack/eslint-patch": "^1.3.2",
     "@types/node": "^18.16.19",
     "eslint": "^8.44.0",

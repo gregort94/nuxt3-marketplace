@@ -1,13 +1,20 @@
-import products from '~/server/productsData'
-import { Product } from '~/types/product'
+import { PrismaClient } from '@prisma/client'
+console.log(Math.random())
+const prisma = new PrismaClient()
 
-export default defineEventHandler(async (event): Product[] => {
-  return products.map((apiProduct) => ({
-    id: String(apiProduct.productId),
-    name: apiProduct.productName,
-    rating: apiProduct.rating,
-    price: Number(apiProduct.productPrice),
-    images: [{ url: apiProduct.productImage }],
-    primaryImage: { url: apiProduct.productImage },
-  }))
+export default defineEventHandler(async (event) => {
+  const { skip = 0, take = 20 } = event.context.params
+  const result = await prisma.product.findMany({
+    skip,
+    take,
+    where: {
+      // title: {
+      //   contains: 'Prisma' /* Optional filter */,
+      // },
+    },
+    orderBy: {
+      id: 'asc',
+    },
+  })
+  return result
 })

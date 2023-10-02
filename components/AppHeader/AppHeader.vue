@@ -7,7 +7,14 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
 
+const route = useRoute()
+
 const mobileMenuOpen = ref(false)
+
+const navigation = ref([
+  { label: 'Home', path: '/' },
+  { label: 'Products', path: '/products' },
+])
 </script>
 
 <template>
@@ -17,7 +24,7 @@ const mobileMenuOpen = ref(false)
       class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
     >
       <div class="border-b border-gray-200">
-        <div class="flex h-16 items-center">
+        <div class="flex h-16 items-center justify-center">
           <button
             type="button"
             class="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
@@ -43,6 +50,20 @@ const mobileMenuOpen = ref(false)
             </NuxtLink>
           </div>
 
+          <div class="flex h-full grow justify-center space-x-8">
+            <NuxtLink
+              v-for="item in navigation"
+              :key="item.label"
+              :to="item.path"
+              :class="[
+                route.fullPath === item.path
+                  ? 'border-indigo-600 text-indigo-600'
+                  : 'border-transparent hover:text-gray-800',
+              ]"
+              class="flex items-center border-b-2 text-sm font-medium text-gray-700"
+              >{{ item.label }}</NuxtLink
+            >
+          </div>
           <!-- Flyout menus -->
 
           <div class="ml-auto flex items-center">
