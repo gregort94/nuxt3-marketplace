@@ -3,4 +3,5 @@ export default defineAppConfig({
     primary: 'sky',
     gray: 'cool',
   },
+  ratingSystem: 5,
 })

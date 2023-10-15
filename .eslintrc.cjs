@@ -15,6 +15,7 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
+    'tailwindcss/no-custom-classname': 0,
     'no-useless-catch': 0,
     'vue/multi-word-component-names': 0,
   },

@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-const { data: list, pending } = await useLazyFetch('/api/product/list')
+const props = defineProps<{}>()
+
+const filters = useProductFilters()
+const { data: list, pending } = await useLazyFetch('/api/product/list', {
+  query: filters,
+})
 </script>
 
 <template>
@@ -22,9 +27,10 @@ const { data: list, pending } = await useLazyFetch('/api/product/list')
           >
             <img
               :src="product.imageUrl"
-              class="h-full w-full object-cover object-center"
+              class="h-full w-full bg-red-50 object-cover object-center"
             />
           </div>
+          <RatingValue :value="product.rating"></RatingValue>
           <h3 class="mt-4 font-medium text-gray-900">{{ product.name }}</h3>
           <p class="mt-2 font-medium text-gray-900">{{ product.price }}</p>
         </NuxtLink>

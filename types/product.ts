@@ -1,8 +1,6 @@
-export type Product = {
-  id: string
-  name: string
-  price: number
-  rating: number
-  images: { url: string }[]
-  primaryImage: { url: string }
+import { Product as ApiProduct } from '@prisma/client'
+export type Product = ApiProduct
+
+export type ProductFilters = {
+  rating?: string
 }

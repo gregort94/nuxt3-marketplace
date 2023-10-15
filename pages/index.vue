@@ -1,5 +1,5 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div>index</div>
+  <div class="h-[200px] bg-white">index</div>
 </template>

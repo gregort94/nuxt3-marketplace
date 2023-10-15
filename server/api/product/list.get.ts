@@ -1,16 +1,15 @@
 import { PrismaClient } from '@prisma/client'
-console.log(Math.random())
+import { ProductFilters } from '~/types/product'
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const { skip = 0, take = 20 } = event.context.params
+  const { rating } = getQuery<ProductFilters>(event)
+  const { skip = 0, take = 20, filters } = event.context.params
   const result = await prisma.product.findMany({
     skip,
     take,
     where: {
-      // title: {
-      //   contains: 'Prisma' /* Optional filter */,
-      // },
+      rating: { gt: rating ? Number(rating) - 1 : undefined },
     },
     orderBy: {
       id: 'asc',

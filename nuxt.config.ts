@@ -4,13 +4,12 @@ export default defineNuxtConfig({
   alias: {
     assets: '/<rootDir>/assets',
   },
-  css: ['~/assets/css/main.css'],
   modules: [
     '@nuxt/ui',
-    '@nuxtjs/tailwindcss',
     'nuxt-headlessui',
     '@nuxtjs/supabase',
     '@vee-validate/nuxt',
+    '@vueuse/nuxt',
   ],
   supabase: {
     redirect: false,

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { THEME_COLORS } from '../../appConstants'
+// import { THEME_COLORS } from '../../appConstants'
+const THEME_COLORS = []
 
 const palette = ref(THEME_COLORS)
 const { ui } = useAppConfig()

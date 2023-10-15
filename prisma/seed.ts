@@ -1,12 +1,18 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
+import { getPercentSteps } from '../utils/ratingSystem'
 
 const prisma = new PrismaClient()
+
+const ratingSystemPercentSteps = getPercentSteps(5)
 
 const generateProduct = () => ({
   name: faker.commerce.product(),
   price: faker.commerce.price(),
-  rating: faker.number.int({ min: 1, max: 5 }),
+  rating:
+    ratingSystemPercentSteps[
+      Math.floor(Math.random() * ratingSystemPercentSteps.length)
+    ],
   imageUrl: faker.image.urlLoremFlickr({ category: 'animal' }),
 })
 
