@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 const appConfig = useAppConfig()
-const { ratingSystem: maxRating } = toRefs(appConfig)
 
 type Props = {
   modelValue?: number
@@ -11,7 +10,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', payload: number): void
 }>()
 
-const steps = computed(() => getPercentSteps(maxRating.value).reverse())
+const steps = computed(() => getPercentSteps(appConfig.ratingSystem).reverse())
 const value = computed(
   () => props.modelValue && getClosestStep(props.modelValue, steps.value),
 )

@@ -2,9 +2,7 @@
   <div class="bg-white">
     <div>
       <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-        <div
-          class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4"
-        >
+        <div class="pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
           <aside>
             <div class="sticky top-[116px]">
               <h2 class="sr-only">Filters</h2>

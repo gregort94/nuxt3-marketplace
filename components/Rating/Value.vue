@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { StarIcon } from '@heroicons/vue/24/outline'
 const appConfig = useAppConfig()
-const { ratingSystem: maxRating } = toRefs(appConfig)
 
 type Props = {
   value: number
 }
 const props = defineProps<Props>()
 
-const steps = computed(() => getPercentSteps(maxRating.value))
+const steps = computed(() => getPercentSteps(appConfig.ratingSystem))
 const value = computed(
   () => props.value && getClosestStep(props.value, steps.value),
 )

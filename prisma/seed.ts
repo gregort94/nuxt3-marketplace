@@ -25,7 +25,7 @@ const generateProducts = (length: number) => {
 }
 
 async function seed() {
-  await prisma.product.createMany({ data: generateProducts(20) })
+  await prisma.product.createMany({ data: generateProducts(100) })
 }
 
 seed()
