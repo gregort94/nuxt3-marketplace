@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Product } from '@prisma/client'
+import { UseImage } from '@vueuse/components'
 
 const props = defineProps<{}>()
 useAppConfig()
@@ -37,12 +38,16 @@ watch(filters, () => {
         class="group text-sm"
       >
         <div
-          class="aspect-square w-full overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75"
+          class="aspect-square w-full overflow-hidden rounded-lg group-hover:opacity-75"
         >
-          <img
+          <UseImage
+            class="relative h-full w-full bg-gray-400 object-cover object-center"
             :src="product.imageUrl"
-            class="h-full w-full bg-red-50 object-cover object-center"
-          />
+          >
+            <template #loading>
+              <USkeleton class="h-full w-full"></USkeleton
+            ></template>
+          </UseImage>
         </div>
         <RatingValue :value="product.rating"></RatingValue>
         <h3 class="mt-4 font-medium text-gray-900">{{ product.name }}</h3>
