@@ -1,7 +1,11 @@
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{ throttleTime?: number }>(), {
-  throttleTime: 500,
-})
+const props = withDefaults(
+  defineProps<{ throttleTime?: number; thrasholdToBottom?: number }>(),
+  {
+    throttleTime: 500,
+    thrasholdToBottom: 100,
+  },
+)
 const emit = defineEmits<{
   (e: 'trigger'): void
 }>()
@@ -15,7 +19,9 @@ const handleTrigger = useThrottleFn(() => {
 const handleScroll = () => {
   if (
     containerEl.value &&
-    containerEl.value?.getBoundingClientRect().bottom - 1 < window.innerHeight
+    containerEl.value?.getBoundingClientRect().bottom -
+      props.thrasholdToBottom <
+      window.innerHeight
   ) {
     handleTrigger()
   }

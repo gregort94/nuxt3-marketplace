@@ -8,17 +8,13 @@ const {
   data: list,
   pending,
   addItems,
-} = await useListFetch<Product>('/api/product/list', {
-  query: filters,
-})
-
-// const {
-//   data: list,
-//   pending,
-//   execute,
-// } = await useLazyFetch('/api/product/list', {
-//   query: filters,
-// })
+} = await useListFetch<Product>(
+  '/api/product/list',
+  {
+    query: filters,
+  },
+  20,
+)
 
 const onBottom = async () => {
   const a = await addItems()
@@ -28,9 +24,7 @@ const onBottom = async () => {
 <template>
   <InfiniteScrollContainer @trigger="onBottom">
     <div class="relative bg-white">
-      <div
-        class="mx-auto max-w-7xl overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
-      >
+      <div class="mx-auto max-w-7xl overflow-hidden px-4 pb-16 sm:px-6 lg:px-8">
         <div
           v-if="list"
           class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8"

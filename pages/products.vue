@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="h-full">
     <div>
       <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
         <div class="pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">

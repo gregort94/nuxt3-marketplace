@@ -3,7 +3,6 @@ export default <T>(
   options: { query?: Ref<{ [key: string]: string | string[] }> },
   itemsPerPage: number = 20,
 ) => {
-  const pending = ref(false)
   const data = ref<T[]>([])
 
   if (options.query) {
@@ -12,6 +11,7 @@ export default <T>(
     })
   }
 
+  const pending = ref(false)
   const fetchList = async () => {
     pending.value = true
     try {
