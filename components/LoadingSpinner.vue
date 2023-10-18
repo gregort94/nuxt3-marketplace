@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div role="status">
+  <div>
     <svg
       aria-hidden="true"
       class="fill-primary-500 mr-2 h-8 w-8 animate-spin text-gray-200"

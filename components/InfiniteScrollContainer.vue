@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 const props = withDefaults(
-  defineProps<{ throttleTime?: number; thrasholdToBottom?: number }>(),
+  defineProps<{
+    throttleTime?: number
+    thrasholdToBottom?: number
+  }>(),
   {
     throttleTime: 500,
     thrasholdToBottom: 100,
@@ -24,6 +27,7 @@ const handleScroll = () => {
       window.innerHeight
   ) {
     handleTrigger()
+    console.log(222)
   }
 }
 

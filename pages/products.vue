@@ -1,42 +1,40 @@
 <template>
   <div class="h-full">
-    <div>
-      <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-        <div class="pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-          <aside>
-            <div class="sticky top-[116px]">
-              <h2 class="sr-only">Filters</h2>
+    <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+      <div class="py-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+        <aside>
+          <div class="sticky top-[116px]">
+            <h2 class="sr-only">Filters</h2>
 
-              <button
-                type="button"
-                class="inline-flex items-center lg:hidden"
-                @click="mobileFiltersOpen = true"
-              >
-                <span class="text-sm font-medium text-gray-700">Filters</span>
-                <PlusIcon
-                  class="ml-1 h-5 w-5 shrink-0 text-gray-400"
-                  aria-hidden="true"
-                />
-              </button>
-              <FilterPannel></FilterPannel>
-            </div>
-          </aside>
-
-          <section
-            aria-labelledby="product-heading"
-            class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
-          >
-            <h2
-              id="product-heading"
-              class="sr-only"
+            <button
+              type="button"
+              class="inline-flex items-center lg:hidden"
+              @click="mobileFiltersOpen = true"
             >
-              Products
-            </h2>
+              <span class="text-sm font-medium text-gray-700">Filters</span>
+              <PlusIcon
+                class="ml-1 h-5 w-5 shrink-0 text-gray-400"
+                aria-hidden="true"
+              />
+            </button>
+            <FilterPannel></FilterPannel>
+          </div>
+        </aside>
 
-            <ProductList></ProductList>
-          </section>
-        </div>
-      </main>
+        <section
+          aria-labelledby="product-heading"
+          class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
+        >
+          <h2
+            id="product-heading"
+            class="sr-only"
+          >
+            Products
+          </h2>
+
+          <ProductList></ProductList>
+        </section>
+      </div>
     </div>
   </div>
 </template>
