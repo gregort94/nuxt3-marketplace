@@ -8,13 +8,7 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
-
-const mobileMenuOpen = ref(false)
-
-const navigation = ref([
-  { label: 'Home', path: '/' },
-  { label: 'Products', path: '/products' },
-])
+const user = useSupabaseUser()
 </script>
 
 <template>
@@ -25,19 +19,6 @@ const navigation = ref([
     >
       <div class="border-b border-gray-200">
         <div class="flex h-16 items-center justify-center">
-          <button
-            type="button"
-            class="relative rounded-md bg-white p-2 text-gray-400 lg:hidden"
-            @click="mobileMenuOpen = true"
-          >
-            <span class="absolute -inset-0.5" />
-            <span class="sr-only">Open menu</span>
-            <Bars3Icon
-              class="h-6 w-6"
-              aria-hidden="true"
-            />
-          </button>
-
           <!-- Logo -->
           <div class="ml-4 flex lg:ml-0">
             <NuxtLink to="/">
@@ -50,55 +31,23 @@ const navigation = ref([
             </NuxtLink>
           </div>
 
-          <div class="flex h-full grow justify-center space-x-8">
-            <NuxtLink
-              v-for="item in navigation"
-              :key="item.label"
-              :to="item.path"
-              :class="[
-                route.fullPath === item.path
-                  ? 'border-indigo-600 text-indigo-600'
-                  : 'border-transparent hover:text-gray-800',
-              ]"
-              class="flex items-center border-b-2 text-sm font-medium text-gray-700"
-              >{{ item.label }}</NuxtLink
-            >
+          <div class="flex h-full grow justify-center">
+            <AppHeaderPageLink path="/"> Home </AppHeaderPageLink>
+            <AppHeaderPageLink path="/products"> Products </AppHeaderPageLink>
           </div>
           <!-- Flyout menus -->
-
-          <div class="ml-auto flex items-center">
+          <div class="ml-auto flex h-full items-center">
+            <ProfileBadge v-if="user"></ProfileBadge>
             <div
-              class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"
+              v-else
+              class="flex h-full items-center"
             >
-              <a
-                href="#"
-                class="text-sm font-medium text-gray-700 hover:text-gray-800"
-                >Sign in</a
-              >
+              <AppHeaderPageLink path="/login"> Log In </AppHeaderPageLink>
               <span
                 class="h-6 w-px bg-gray-200"
                 aria-hidden="true"
               />
-              <a
-                href="#"
-                class="text-sm font-medium text-gray-700 hover:text-gray-800"
-                >Create account</a
-              >
-            </div>
-
-            <div class="hidden lg:ml-8 lg:flex">
-              <a
-                href="#"
-                class="flex items-center text-gray-700 hover:text-gray-800"
-              >
-                <img
-                  src="https://tailwindui.com/img/flags/flag-canada.svg"
-                  alt=""
-                  class="block h-auto w-5 shrink-0"
-                />
-                <span class="ml-3 block text-sm font-medium">CAD</span>
-                <span class="sr-only">, change currency</span>
-              </a>
+              <AppHeaderPageLink path="/signUp"> Sign Up </AppHeaderPageLink>
             </div>
 
             <!-- Search -->

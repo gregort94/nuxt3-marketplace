@@ -19,47 +19,47 @@ const logIn = async (values) => {
 </script>
 
 <template>
-  <div>
-    <VeeForm
-      class="space-y-4"
-      @submit="logIn"
+  <VeeForm
+    class="space-y-4"
+    @submit="logIn"
+  >
+    <VeeField
+      v-slot="{ value, handleChange, errorMessage, meta }"
+      :model-value="'gregort94@gmail.com'"
+      name="email"
+      rules="required|email"
     >
-      <VeeField
-        v-slot="{ value, handleChange, errorMessage, meta }"
-        name="email"
-        rules="required|email"
+      <UFormGroup
+        label="Email"
+        :error="meta.touched && errorMessage"
       >
-        <UFormGroup
-          label="Email"
-          :error="meta.touched && errorMessage"
-        >
-          <UInput
-            :model-value="value"
-            @update:model-value="handleChange"
-          ></UInput>
-        </UFormGroup>
-      </VeeField>
-      <VeeField
-        v-slot="{ value, handleChange, meta, errorMessage }"
-        name="password"
-        rules="required"
+        <UInput
+          :model-value="value"
+          @update:model-value="handleChange"
+        ></UInput>
+      </UFormGroup>
+    </VeeField>
+    <VeeField
+      v-slot="{ value, handleChange, meta, errorMessage }"
+      name="password"
+      rules="required"
+      :model-value="'g3i8g4'"
+    >
+      <UFormGroup
+        :error="meta.touched && errorMessage"
+        label="Password"
       >
-        <UFormGroup
-          :error="meta.touched && errorMessage"
-          label="Password"
-        >
-          <UInput
-            :model-value="value"
-            @update:model-value="handleChange"
-          ></UInput>
-        </UFormGroup>
-      </VeeField>
-      <UButton
-        class="w-full"
-        type="submit"
-        block
-        >Log In</UButton
-      >
-    </VeeForm>
-  </div>
+        <UInput
+          :model-value="value"
+          @update:model-value="handleChange"
+        ></UInput>
+      </UFormGroup>
+    </VeeField>
+    <UButton
+      class="w-full"
+      type="submit"
+      block
+      >Log In</UButton
+    >
+  </VeeForm>
 </template>
