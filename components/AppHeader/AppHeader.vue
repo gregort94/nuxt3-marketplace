@@ -1,22 +1,12 @@
 <script setup>
-import { ref } from 'vue'
-import {
-  Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
-} from '@heroicons/vue/24/outline'
+import { ShoppingBagIcon } from '@heroicons/vue/24/outline'
 
-const route = useRoute()
 const user = useSupabaseUser()
 </script>
 
 <template>
-  <header class="relative bg-white">
-    <nav
-      aria-label="Top"
-      class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-    >
+  <header>
+    <div class="container">
       <div class="border-b border-gray-200">
         <div class="flex h-16 items-center justify-center">
           <!-- Logo -->
@@ -50,20 +40,6 @@ const user = useSupabaseUser()
               <AppHeaderPageLink path="/signUp"> Sign Up </AppHeaderPageLink>
             </div>
 
-            <!-- Search -->
-            <div class="flex lg:ml-6">
-              <a
-                href="#"
-                class="p-2 text-gray-400 hover:text-gray-500"
-              >
-                <span class="sr-only">Search</span>
-                <MagnifyingGlassIcon
-                  class="h-6 w-6"
-                  aria-hidden="true"
-                />
-              </a>
-            </div>
-
             <!-- Cart -->
             <div class="ml-4 flow-root lg:ml-6">
               <a
@@ -84,6 +60,6 @@ const user = useSupabaseUser()
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   </header>
 </template>

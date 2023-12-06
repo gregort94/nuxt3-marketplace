@@ -11,12 +11,6 @@ export default <T>(
   const totalReached = computed(() => data.value.length === total.value)
   const itemsRemain = computed(() => total.value - data.value.length)
 
-  if (options.query) {
-    watch(options.query, () => {
-      fetchList()
-    })
-  }
-
   const pending = ref(false)
   const fetchList = async () => {
     pending.value = true
@@ -33,6 +27,12 @@ export default <T>(
   }
 
   fetchList()
+
+  if (options.query) {
+    watch(options.query, () => {
+      fetchList()
+    })
+  }
 
   const addItemsPending = ref(false)
   const addItems = async () => {

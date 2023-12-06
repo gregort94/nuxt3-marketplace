@@ -2,7 +2,7 @@
 import { Product } from '@prisma/client'
 import { UseImage } from '@vueuse/components'
 
-const props = defineProps<{}>()
+// const props = defineProps()
 useAppConfig()
 const filters = useProductFilters()
 
@@ -40,14 +40,10 @@ watch(filters, () => {
         <div
           class="aspect-square w-full overflow-hidden rounded-lg group-hover:opacity-75"
         >
-          <UseImage
-            class="relative h-full w-full bg-gray-400 object-cover object-center"
+          <VSkeletonImage
+            class="h-full w-full object-cover"
             :src="product.imageUrl"
-          >
-            <template #loading>
-              <USkeleton class="h-full w-full"></USkeleton
-            ></template>
-          </UseImage>
+          ></VSkeletonImage>
         </div>
         <RatingValue :value="product.rating"></RatingValue>
         <h3 class="mt-4 font-medium text-gray-900">{{ product.name }}</h3>

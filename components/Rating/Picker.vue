@@ -28,7 +28,10 @@ const value = computed(
       :value="step"
     >
       <UIRadioItem :checked="checked">
-        <RatingValue :value="step"></RatingValue>
+        <div class="flex space-x-1">
+          <RatingValue :value="step"></RatingValue>
+          <span class="text-sm text-gray-500">& Up</span>
+        </div>
       </UIRadioItem>
     </HeadlessRadioGroupOption>
   </HeadlessRadioGroup>
