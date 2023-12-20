@@ -8,5 +8,12 @@ export default defineEventHandler(async (event) => {
   const product = await prisma.product.findUnique({
     where: { id: Number(id) },
   })
+
+  if (!product) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Product not found',
+    })
+  }
   return product
 })

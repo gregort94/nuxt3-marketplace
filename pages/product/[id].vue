@@ -12,7 +12,7 @@ const { data: product, pending } = await useLazyFetch<Product>(
 
 <template>
   <div class="container">
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-2 gap-4">
       <div>
         <div class="aspect-square w-full overflow-hidden rounded-md">
           <VSkeletonImage
@@ -22,54 +22,28 @@ const { data: product, pending } = await useLazyFetch<Product>(
           ></VSkeletonImage>
         </div>
       </div>
-      <div>
+      <div class="space-y-1">
         <VSkeleton
-          class="text-2xl"
+          class="text-3xl font-semibold text-gray-900"
           :loading="pending"
           >{{ product?.name }}</VSkeleton
         >
+        <VSkeleton
+          class="text-3xl text-gray-900"
+          :loading="pending"
+          >{{ product?.price }}$</VSkeleton
+        >
+        <VSkeleton :loading="pending">
+          <RatingValue
+            v-if="product"
+            :value="product.rating"
+          ></RatingValue>
+        </VSkeleton>
+        <ProductCartManager
+          v-if="product"
+          :product-id="product.id"
+        ></ProductCartManager>
       </div>
     </div>
   </div>
-  <!-- <div
-    v-if="product"
-    class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
-  >
-    <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-      <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900">
-          {{ product.name }}
-        </h1>
-
-        <div class="mt-3">
-          <h2 class="sr-only">Product information</h2>
-          <p class="text-3xl tracking-tight text-gray-900">
-            {{ product.price }}
-          </p>
-        </div>
-
-        <form class="mt-6">
-          <div class="mt-10 flex">
-            <button
-              type="submit"
-              class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
-            >
-              Add to bag
-            </button>
-
-            <button
-              type="button"
-              class="ml-4 flex items-center justify-center rounded-md p-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-            >
-              <HeartIcon
-                class="h-6 w-6 shrink-0"
-                aria-hidden="true"
-              />
-              <span class="sr-only">Add to favorites</span>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div> -->
 </template>

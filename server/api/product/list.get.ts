@@ -3,7 +3,12 @@ import { ProductFilters } from '~/types/product'
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const { rating, skip, take, count } = getQuery<
+  const {
+    rating,
+    skip,
+    take = 10,
+    count,
+  } = getQuery<
     ProductFilters & { skip: number; take: number; count?: boolean }
   >(event)
   const where = {
@@ -16,7 +21,6 @@ export default defineEventHandler(async (event) => {
       where,
     })
   }
-
   const list = await prisma.product.findMany({
     skip: skip && Number(skip),
     take: take && Number(take),

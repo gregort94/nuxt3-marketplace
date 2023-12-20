@@ -42,8 +42,8 @@ const user = useSupabaseUser()
 
             <!-- Cart -->
             <div class="ml-4 flow-root lg:ml-6">
-              <a
-                href="#"
+              <NuxtLink
+                to="/cart"
                 class="group -m-2 flex items-center p-2"
               >
                 <ShoppingBagIcon
@@ -55,7 +55,7 @@ const user = useSupabaseUser()
                   >0</span
                 >
                 <span class="sr-only">items in cart, view bag</span>
-              </a>
+              </NuxtLink>
             </div>
           </div>
         </div>

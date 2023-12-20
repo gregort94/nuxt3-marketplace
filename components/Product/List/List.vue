@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Product } from '@prisma/client'
-import { UseImage } from '@vueuse/components'
 
 // const props = defineProps()
 useAppConfig()
@@ -13,7 +12,7 @@ const {
   addItems,
   addItemsPending,
   itemsRemain,
-} = await useListFetch<Product>(
+} = useListFetch<Product>(
   '/api/product/list',
   {
     query: filters,

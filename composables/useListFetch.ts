@@ -1,3 +1,5 @@
+import { server } from 'process'
+
 export default <T>(
   url: string,
   options: { query?: Ref<{ [key: string]: string | string[] }> },
@@ -17,8 +19,8 @@ export default <T>(
     try {
       const { list, total: totalItems } = await $fetch<ApiResponse>(url, {
         query: { ...options.query?.value, take: itemsPerPage, count: true },
+        headers: useRequestHeaders(['cookie']),
       })
-
       data.value = list
       total.value = totalItems
     } finally {
@@ -33,7 +35,6 @@ export default <T>(
       fetchList()
     })
   }
-
   const addItemsPending = ref(false)
   const addItems = async () => {
     if (totalReached.value) return

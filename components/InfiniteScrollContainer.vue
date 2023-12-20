@@ -27,7 +27,6 @@ const handleScroll = () => {
       window.innerHeight
   ) {
     handleTrigger()
-    console.log(222)
   }
 }
 

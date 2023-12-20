@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase',
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
+    '@pinia/nuxt',
   ],
   supabase: {
     redirect: false,

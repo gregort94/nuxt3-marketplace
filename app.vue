@@ -1,7 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { cart } = useCart()
+</script>
 
 <template>
   <div>
+    <NuxtLoadingIndicator></NuxtLoadingIndicator>
     <NuxtLayout>
       <NuxtPage />
       <template #fallback>
