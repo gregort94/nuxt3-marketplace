@@ -1,19 +1,17 @@
 export const useCart = defineStore('cart', () => {
   const products = ref<{ [id: string]: number }>({})
+
   const initialized = ref(false)
 
   const initialize = async () => {
-    const { data } = await useFetch('/api/user/cart', {
-      headers: useRequestHeaders(['cookie']),
-    })
-    const cartItems = data.value
+    if (initialized.value) return
+
+    const cartItems = await $fetch('/api/user/cart')
     products.value = Object.fromEntries(
       cartItems.map((cartItem) => [cartItem.productId, cartItem.quantity]),
     )
     initialized.value = true
   }
-
-  initialize()
 
   const setQuantity = async (productId: number, quantity: number) => {
     if (!products.value) return
@@ -35,5 +33,5 @@ export const useCart = defineStore('cart', () => {
     delete products.value[productId]
   }
 
-  return { products, setQuantity, removeProduct, initialized }
+  return { initialize, products, setQuantity, removeProduct, initialized }
 })

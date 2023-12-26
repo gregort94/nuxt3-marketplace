@@ -2,6 +2,7 @@
 const props = defineProps<{ productId: number }>()
 
 const cart = useCart()
+cart.initialize()
 
 const productQuantity = computed<number | undefined>(
   () => cart.products?.[props.productId],
