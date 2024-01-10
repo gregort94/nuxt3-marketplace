@@ -4,7 +4,7 @@ const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
   const { id } = event.context.params
-
+  // await wait(3000)
   const product = await prisma.product.findUnique({
     where: { id: Number(id) },
   })

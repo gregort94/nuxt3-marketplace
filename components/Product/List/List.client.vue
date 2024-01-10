@@ -4,7 +4,6 @@ import { Product } from '@prisma/client'
 // const props = defineProps()
 useAppConfig()
 const filters = useProductFilters()
-
 const ITEMS_PER_PAGE = 20
 const {
   data: list,

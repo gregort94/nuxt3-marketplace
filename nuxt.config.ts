@@ -28,4 +28,7 @@ export default defineNuxtConfig({
     preference: 'light',
   },
   build: { transpile: ['@vee-validate/rules'] },
+  tailwindcss: {
+    viewer: false,
+  },
 })

@@ -4,7 +4,6 @@ const { cart } = useCart()
 
 <template>
   <div>
-    <NuxtLoadingIndicator></NuxtLoadingIndicator>
     <NuxtLayout>
       <NuxtPage />
       <template #fallback>

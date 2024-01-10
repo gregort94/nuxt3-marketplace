@@ -1,6 +1,6 @@
 export default <T>(
   url: string,
-  options: { query?: Ref<{ [key: string]: string | string[] }> },
+  options: { query?: { [key: string]: string | string[] | null } },
   itemsPerPage: number = 20,
 ) => {
   type ApiResponse = { list: T[]; total?: number }
@@ -8,15 +8,17 @@ export default <T>(
   const data = ref<T[]>()
 
   const total = ref<number>()
-  const totalReached = computed(() => data.value.length === total.value)
-  const itemsRemain = computed(() => total.value - data.value.length)
+  const totalReached = computed(() => data.value?.length === total.value)
+  const itemsRemain = computed(
+    () => data.value && total.value && total.value - data.value.length,
+  )
 
   const pending = ref(false)
   const fetchList = async () => {
     pending.value = true
     try {
       const { list, total: totalItems } = await $fetch<ApiResponse>(url, {
-        query: { ...options.query?.value, take: itemsPerPage, count: true },
+        query: { ...options.query, take: itemsPerPage, count: true },
       })
       data.value = list
       total.value = totalItems
@@ -40,7 +42,7 @@ export default <T>(
     try {
       const { list } = await $fetch<ApiResponse>(url, {
         query: {
-          ...options.query?.value,
+          ...options.query,
           take: itemsPerPage,
           skip: data.value.length,
         },

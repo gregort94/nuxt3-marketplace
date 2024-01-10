@@ -1,23 +1,45 @@
-export const useCart = defineStore('cart', () => {
-  const products = ref<{ [id: string]: number }>({})
+import { skipHydrate } from 'pinia'
 
-  const initialized = ref(false)
+export const useCart = defineStore('cart', () => {
+  const user = useSupabaseUser()
+
+  const products = useLocalStorage<{ [id: string]: number }>(
+    'cartProducts',
+    {},
+    { deep: true },
+  )
+
+  const isInitialized = ref(false)
+
+  const isCartFetching = ref(false)
 
   const initialize = async () => {
-    if (initialized.value) return
+    if (isInitialized.value) return
 
-    const cartItems = await $fetch('/api/user/cart')
-    products.value = Object.fromEntries(
-      cartItems.map((cartItem) => [cartItem.productId, cartItem.quantity]),
-    )
-    initialized.value = true
+    if (!user.value) {
+      isInitialized.value = true
+      return
+    }
+
+    try {
+      isCartFetching.value = true
+      const cartItems = await $fetch('/api/user/cart')
+      products.value = Object.fromEntries(
+        cartItems.map((cartItem) => [cartItem.productId, cartItem.quantity]),
+      )
+      isInitialized.value = true
+    } finally {
+      isCartFetching.value = false
+    }
   }
 
   const setQuantity = async (productId: number, quantity: number) => {
-    if (!products.value) return
+    if (!isInitialized.value) return
 
     const initialQuantity = products.value[productId]
     products.value[productId] = quantity
+
+    if (!user.value) return
 
     try {
       await $fetch(`/api/product/${productId}/cart`, {
@@ -33,5 +55,12 @@ export const useCart = defineStore('cart', () => {
     delete products.value[productId]
   }
 
-  return { initialize, products, setQuantity, removeProduct, initialized }
+  return {
+    initialize,
+    products: skipHydrate(products),
+    setQuantity,
+    removeProduct,
+    isInitialized,
+    isCartFetching,
+  }
 })

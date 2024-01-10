@@ -1,4 +1,4 @@
-import { Product as ApiProduct } from '@prisma/client'
+import type { Product as ApiProduct } from '@prisma/client'
 export type Product = ApiProduct
 
 export type ProductFilters = {

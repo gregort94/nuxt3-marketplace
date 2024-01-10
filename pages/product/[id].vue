@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { UseImage } from '@vueuse/components'
-import { Product } from '~/types/product'
+import type { Product } from '~/types/product'
+useTest()
 
 const route = useRoute()
 const { id } = route.params
