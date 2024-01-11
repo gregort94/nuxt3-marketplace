@@ -1,7 +1,7 @@
-<script lang="ts" setup>
-definePageMeta({ middleware: ['auth'] })
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div>CART</div>
+  <div class="container">
+    
+  </div>
 </template>

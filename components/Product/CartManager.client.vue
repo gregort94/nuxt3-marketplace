@@ -2,15 +2,18 @@
 const props = defineProps<{ productId: number }>()
 
 const cart = useCart()
-cart.initialize()
 
 const productQuantity = computed<number>(() => cart.products[props.productId])
+
+const isProductPending = computed(() =>
+  cart.pendingProductsIds.has(props.productId),
+)
 
 const addToCart = () => cart.setQuantity(props.productId, 1)
 
 const onReduce = () => {
   if (productQuantity.value === 1) {
-    cart.removeProduct(props.productId)
+    cart.deleteProduct(props.productId)
   } else {
     cart.setQuantity(props.productId, (productQuantity.value as number) - 1)
   }
@@ -22,7 +25,8 @@ const onIncrease = () =>
 <template>
   <VSkeleton
     class="min-h-[32px]"
-    :loading="cart.isCartFetching"
+    block-actions
+    :loading="cart.isCartFetching || isProductPending"
   >
     <div v-if="!productQuantity && cart.isInitialized">
       <UButton @click="addToCart">Add to cart</UButton>
@@ -32,7 +36,9 @@ const onIncrease = () =>
       class="flex items-center space-x-2"
     >
       <UButton
-        icon="i-heroicons-minus"
+        :icon="
+          productQuantity === 1 ? 'i-heroicons-trash' : 'i-heroicons-minus'
+        "
         square
         @click="onReduce"
       />

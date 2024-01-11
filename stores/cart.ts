@@ -1,6 +1,7 @@
 import { skipHydrate } from 'pinia'
 
-export const useCart = defineStore('cart', () => {
+const useCartStore = defineStore('cart', () => {
+  const toast = useToast()
   const user = useSupabaseUser()
 
   const products = useLocalStorage<{ [id: string]: number }>(
@@ -13,9 +14,11 @@ export const useCart = defineStore('cart', () => {
 
   const isCartFetching = ref(false)
 
-  const initialize = async () => {
-    if (isInitialized.value) return
+  const totalQuantity = computed(() =>
+    Object.entries(products.value).reduce((acc, cur) => acc + cur[1], 0),
+  )
 
+  const initialize = async () => {
     if (!user.value) {
       isInitialized.value = true
       return
@@ -33,34 +36,57 @@ export const useCart = defineStore('cart', () => {
     }
   }
 
+  const pendingProductsIds = ref<Set<number>>(new Set())
+
   const setQuantity = async (productId: number, quantity: number) => {
-    if (!isInitialized.value) return
-
-    const initialQuantity = products.value[productId]
-    products.value[productId] = quantity
-
-    if (!user.value) return
+    if (!user) return (products.value[productId] = quantity)
 
     try {
+      pendingProductsIds.value.add(productId)
       await $fetch(`/api/product/${productId}/cart`, {
         method: 'POST',
         body: { quantity },
       })
-    } catch (err) {
-      products.value[productId] = initialQuantity
+      products.value[productId] = quantity
+    } catch (err: any) {
+      toast.add({ title: err.message, color: 'red' })
+    } finally {
+      pendingProductsIds.value.delete(productId)
     }
   }
 
-  const removeProduct = (productId: number) => {
-    delete products.value[productId]
+  const deleteProduct = async (productId: number) => {
+    if (!user) return delete products.value[productId]
+
+    try {
+      pendingProductsIds.value.add(productId)
+      await $fetch(`/api/product/${productId}/cart`, {
+        method: 'DELETE',
+      })
+      delete products.value[productId]
+    } catch (err: any) {
+      toast.add({ title: err.message, color: 'red' })
+    } finally {
+      pendingProductsIds.value.delete(productId)
+    }
   }
 
   return {
     initialize,
     products: skipHydrate(products),
     setQuantity,
-    removeProduct,
+    deleteProduct,
     isInitialized,
     isCartFetching,
+    totalQuantity,
+    pendingProductsIds,
   }
 })
+
+export const useCart = () => {
+  const cart = useCartStore()
+  if (!cart.isInitialized && !cart.isCartFetching && process.client) {
+    cart.initialize()
+  }
+  return cart
+}

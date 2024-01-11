@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { Product } from '~/types/product'
-useTest()
 
 const route = useRoute()
 const { id } = route.params

@@ -1,6 +1,4 @@
-<script setup lang="ts">
-const { cart } = useCart()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>

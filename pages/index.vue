@@ -1,7 +1,5 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="h-[200px] bg-white">
-    <Lvl1></Lvl1>
-  </div>
+  <div class="h-[200px] bg-white"></div>
 </template>

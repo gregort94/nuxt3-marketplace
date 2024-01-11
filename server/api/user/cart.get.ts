@@ -8,5 +8,18 @@ export default defineEventHandler(async (event) => {
   await wait(4000)
   const { id: userId } = event.context.user
 
-  return await prisma.cartItem.findMany({ where: { userId } })
+  return prisma.cartItem.findMany({
+    where: { userId },
+    include: {
+      Product: {
+        select: {
+          imageUrl: true,
+          price: true,
+          name: true,
+          rating: true,
+          id: true,
+        },
+      },
+    },
+  })
 })
