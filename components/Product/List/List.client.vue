@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Product } from '@prisma/client'
+import type { ProductPreview } from '~/types/product'
 
 // const props = defineProps()
 useAppConfig()
@@ -11,7 +11,7 @@ const {
   addItems,
   addItemsPending,
   itemsRemain,
-} = useListFetch<Product>(
+} = useListFetch<ProductPreview>(
   '/api/product/list',
   {
     query: filters,

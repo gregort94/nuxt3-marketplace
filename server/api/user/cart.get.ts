@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import authOnly from '~/server/utils/guards/authOnly'
+import { UserCartPrduct } from '~/types/cart'
 
 const prisma = new PrismaClient()
 
@@ -16,8 +17,8 @@ export default defineEventHandler(async (event) => {
           imageUrl: true,
           price: true,
           name: true,
-          rating: true,
           id: true,
+          rating: true,
         },
       },
     },

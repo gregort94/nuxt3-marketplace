@@ -14,7 +14,7 @@ const cart = useCart()
         :loading="cart.isCartFetching"
       >
         <ClientOnly>
-          <span>{{ cart.totalQuantity }}</span>
+          <span>{{ cart.summary.quantity }}</span>
         </ClientOnly>
       </VSkeleton>
     </UButton>

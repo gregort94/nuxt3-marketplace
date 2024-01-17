@@ -8,7 +8,7 @@ const ratingSystemPercentSteps = getPercentSteps(5)
 
 const generateProduct = () => ({
   name: faker.commerce.product(),
-  price: faker.commerce.price(),
+  price: Number(faker.commerce.price()),
   rating:
     ratingSystemPercentSteps[
       Math.floor(Math.random() * ratingSystemPercentSteps.length)

@@ -11,7 +11,7 @@ generator client {
 model Product {
   id        Int        @id @default(autoincrement())
   name      String
-  price     String
+  price     Int
   rating    Int
   imageUrl  String
   createdAt DateTime   @default(now())

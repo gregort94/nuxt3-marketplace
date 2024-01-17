@@ -1,25 +1,29 @@
 <script lang="ts" setup>
-const props = defineProps<{ productId: number }>()
+import type { ProductPreview } from '~/types/product'
+
+const props = defineProps<{ product: ProductPreview }>()
+
+const productId = computed(() => props.product.id)
 
 const cart = useCart()
 
-const productQuantity = computed<number>(() => cart.products[props.productId])
+const productQuantity = computed(() => cart.items[productId.value]?.quantity)
 
 const isProductPending = computed(() =>
-  cart.pendingProductsIds.has(props.productId),
+  cart.pendingProductsIds.has(productId.value),
 )
 
-const addToCart = () => cart.setQuantity(props.productId, 1)
+const addToCart = () => cart.addProduct(props.product)
 
 const onReduce = () => {
   if (productQuantity.value === 1) {
-    cart.deleteProduct(props.productId)
+    cart.deleteProduct(productId.value)
   } else {
-    cart.setQuantity(props.productId, (productQuantity.value as number) - 1)
+    cart.setQuantity(productId.value, (productQuantity.value as number) - 1)
   }
 }
 const onIncrease = () =>
-  cart.setQuantity(props.productId, (productQuantity.value as number) + 1)
+  cart.setQuantity(productId.value, (productQuantity.value as number) + 1)
 </script>
 
 <template>

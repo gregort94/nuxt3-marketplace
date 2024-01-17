@@ -4,7 +4,6 @@ import { useImage } from '@vueuse/core'
 const props = defineProps<{
   loading?: boolean
   src?: string
-  imgClasses?: string
 }>()
 
 const src = toRef(props, 'src')

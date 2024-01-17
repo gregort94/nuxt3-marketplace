@@ -1,21 +1,28 @@
 import { skipHydrate } from 'pinia'
+import type { ProductPreview } from '~/types/product'
+// import type { UserCartPrduct } from '~/types/cart'
 
 const useCartStore = defineStore('cart', () => {
   const toast = useToast()
   const user = useSupabaseUser()
 
-  const products = useLocalStorage<{ [id: string]: number }>(
-    'cartProducts',
-    {},
-    { deep: true },
-  )
+  const items = useLocalStorage<{
+    [id: string]: { quantity: number; product: ProductPreview }
+  }>('cartProducts', {}, { deep: true })
 
   const isInitialized = ref(false)
 
   const isCartFetching = ref(false)
 
-  const totalQuantity = computed(() =>
-    Object.entries(products.value).reduce((acc, cur) => acc + cur[1], 0),
+  const summary = computed(() =>
+    Object.entries(items.value).reduce(
+      (acc, cur) => {
+        acc.price += cur[1].product.price * cur[1].quantity
+        acc.quantity += cur[1].quantity
+        return acc
+      },
+      { price: 0, quantity: 0 },
+    ),
   )
 
   const initialize = async () => {
@@ -27,8 +34,11 @@ const useCartStore = defineStore('cart', () => {
     try {
       isCartFetching.value = true
       const cartItems = await $fetch('/api/user/cart')
-      products.value = Object.fromEntries(
-        cartItems.map((cartItem) => [cartItem.productId, cartItem.quantity]),
+      items.value = Object.fromEntries(
+        cartItems.map((cartItem) => [
+          cartItem.productId,
+          { quantity: cartItem.quantity, product: cartItem.Product },
+        ]),
       )
       isInitialized.value = true
     } finally {
@@ -38,8 +48,27 @@ const useCartStore = defineStore('cart', () => {
 
   const pendingProductsIds = ref<Set<number>>(new Set())
 
+  const addProduct = async (product: ProductPreview) => {
+    const productId = product.id
+
+    if (!user) return (items.value[productId] = { quantity: 1, product })
+
+    try {
+      pendingProductsIds.value.add(productId)
+      await $fetch(`/api/product/${productId}/cart`, {
+        method: 'POST',
+        body: { quantity: 1 },
+      })
+      items.value[product.id] = { quantity: 1, product }
+    } catch (err: any) {
+      toast.add({ title: err.message, color: 'red' })
+    } finally {
+      pendingProductsIds.value.delete(productId)
+    }
+  }
+
   const setQuantity = async (productId: number, quantity: number) => {
-    if (!user) return (products.value[productId] = quantity)
+    if (!user) return (items.value[productId].quantity = quantity)
 
     try {
       pendingProductsIds.value.add(productId)
@@ -47,7 +76,7 @@ const useCartStore = defineStore('cart', () => {
         method: 'POST',
         body: { quantity },
       })
-      products.value[productId] = quantity
+      items.value[productId].quantity = quantity
     } catch (err: any) {
       toast.add({ title: err.message, color: 'red' })
     } finally {
@@ -56,14 +85,14 @@ const useCartStore = defineStore('cart', () => {
   }
 
   const deleteProduct = async (productId: number) => {
-    if (!user) return delete products.value[productId]
+    if (!user) return delete items.value[productId]
 
     try {
       pendingProductsIds.value.add(productId)
       await $fetch(`/api/product/${productId}/cart`, {
         method: 'DELETE',
       })
-      delete products.value[productId]
+      delete items.value[productId]
     } catch (err: any) {
       toast.add({ title: err.message, color: 'red' })
     } finally {
@@ -73,13 +102,14 @@ const useCartStore = defineStore('cart', () => {
 
   return {
     initialize,
-    products: skipHydrate(products),
+    items: skipHydrate(items),
     setQuantity,
     deleteProduct,
     isInitialized,
     isCartFetching,
-    totalQuantity,
+    summary,
     pendingProductsIds,
+    addProduct,
   }
 })
 

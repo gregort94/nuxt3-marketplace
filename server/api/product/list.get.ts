@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
     skip: skip && Number(skip),
     take: take && Number(take),
     where,
+    select: { id: true, imageUrl: true, name: true, price: true, rating: true },
     orderBy: {
       id: 'asc',
     },
