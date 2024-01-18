@@ -6,8 +6,23 @@ const prisma = new PrismaClient()
 
 const ratingSystemPercentSteps = getPercentSteps(5)
 
+const memoizeUnique = <T>(callback: () => T) => {
+  const uniqItems = new Set()
+
+  return () => {
+    let res
+    do {
+      res = callback()
+    } while (uniqItems.has(res))
+    uniqItems.add(res)
+    return res
+  }
+}
+
+const getUniqProductName = memoizeUnique(faker.commerce.productName)
+
 const generateProduct = () => ({
-  name: faker.commerce.product(),
+  name: getUniqProductName(),
   price: Number(faker.commerce.price()),
   rating:
     ratingSystemPercentSteps[
@@ -25,7 +40,7 @@ const generateProducts = (length: number) => {
 }
 
 async function seed() {
-  await prisma.product.createMany({ data: generateProducts(1000) })
+  await prisma.product.createMany({ data: generateProducts(100) })
 }
 
 seed()

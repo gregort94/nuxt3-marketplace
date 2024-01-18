@@ -39,8 +39,9 @@ const user = useSupabaseUser()
             </div>
 
             <!-- Cart -->
-            <div class="ml-4 flow-root lg:ml-6">
-              <CartViewer></CartViewer>
+            <div class="ml-4 flex">
+              <NavigationButtonCart></NavigationButtonCart>
+              <NavigationButtonOrders></NavigationButtonOrders>
             </div>
           </div>
         </div>
