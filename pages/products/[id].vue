@@ -5,7 +5,7 @@ const route = useRoute()
 const { id } = route.params
 
 const { data: product, pending } = await useLazyFetch<Product>(
-  `/api/product/${id}`,
+  `/api/products/${id}`,
 )
 
 const productPreview = computed(
@@ -25,7 +25,7 @@ const productPreview = computed(
           ></VSkeletonImage>
         </div>
       </div>
-      <div class="space-y-1">
+      <div class="flex flex-col items-start space-y-1">
         <VSkeleton
           class="text-3xl font-semibold text-gray-900"
           :loading="pending"

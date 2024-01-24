@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const supabase = useSupabaseClient()
-const toast = useToast()
+const notifier = useNotifier()
 const router = useRouter()
 
 const logIn = async (values) => {
@@ -10,9 +10,9 @@ const logIn = async (values) => {
   })
 
   if (error) {
-    toast.add({ title: error.message, color: 'red' })
+    notifier.warn(error.message)
   } else {
-    toast.add({ title: 'Successfully logged in!' })
+    notifier.success('Successfully logged in!')
     router.push('/')
   }
 }

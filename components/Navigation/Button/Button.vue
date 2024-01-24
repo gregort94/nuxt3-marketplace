@@ -18,7 +18,7 @@ const props = defineProps<{
         v-if="badgeText"
         class="absolute right-0 top-0 inline-flex items-center rounded-md bg-gray-50 p-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
       >
-        1
+        {{ badgeText }}
       </div>
     </ClientOnly>
   </div>

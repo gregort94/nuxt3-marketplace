@@ -33,21 +33,27 @@ const onIncrease = () =>
     :loading="cart.isCartFetching || isProductPending"
   >
     <div v-if="!productQuantity && cart.isInitialized">
-      <UButton @click="addToCart">Add to cart</UButton>
+      <UButton
+        block
+        @click="addToCart"
+        >Add to cart</UButton
+      >
     </div>
     <div
       v-if="productQuantity"
       class="flex items-center space-x-2"
     >
       <UButton
+        variant="outline"
         :icon="
           productQuantity === 1 ? 'i-heroicons-trash' : 'i-heroicons-minus'
         "
         square
         @click="onReduce"
       />
-      <div>{{ productQuantity }}</div>
+      <div class="grow text-center">{{ productQuantity }}</div>
       <UButton
+        variant="outline"
         icon="i-heroicons-plus"
         square
         @click="onIncrease"

@@ -3,7 +3,7 @@ import type { ProductPreview } from '~/types/product'
 // import type { UserCartPrduct } from '~/types/cart'
 
 const useCartStore = defineStore('cart', () => {
-  const toast = useToast()
+  const notifier = useNotifier()
   const user = useSupabaseUser()
 
   const items = useLocalStorage<{
@@ -55,13 +55,13 @@ const useCartStore = defineStore('cart', () => {
 
     try {
       pendingProductsIds.value.add(productId)
-      await $fetch(`/api/product/${productId}/cart`, {
+      await $fetch(`/api/products/${productId}/cart`, {
         method: 'POST',
         body: { quantity: 1 },
       })
       items.value[product.id] = { quantity: 1, product }
     } catch (err: any) {
-      toast.add({ title: err.message, color: 'red' })
+      notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }
@@ -72,13 +72,13 @@ const useCartStore = defineStore('cart', () => {
 
     try {
       pendingProductsIds.value.add(productId)
-      await $fetch(`/api/product/${productId}/cart`, {
+      await $fetch(`/api/products/${productId}/cart`, {
         method: 'POST',
         body: { quantity },
       })
       items.value[productId].quantity = quantity
     } catch (err: any) {
-      toast.add({ title: err.message, color: 'red' })
+      notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }
@@ -89,12 +89,12 @@ const useCartStore = defineStore('cart', () => {
 
     try {
       pendingProductsIds.value.add(productId)
-      await $fetch(`/api/product/${productId}/cart`, {
+      await $fetch(`/api/products/${productId}/cart`, {
         method: 'DELETE',
       })
       delete items.value[productId]
     } catch (err: any) {
-      toast.add({ title: err.message, color: 'red' })
+      notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }

@@ -31,13 +31,19 @@ model CartItem {
   @@unique([userId, productId])
 }
 
+enum PaymentMethod {
+  CARD
+  CASH
+}
+
 model Order {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  userId    String
-  address   String
-  OrderItem OrderItem[]
+  id            Int           @id @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  userId        String
+  address       String
+  paymentMethod PaymentMethod
+  OrderItem     OrderItem[]
 }
 
 model OrderItem {

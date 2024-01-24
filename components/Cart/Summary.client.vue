@@ -13,30 +13,10 @@ const cart = useCart()
       <div class="flex items-center justify-between">
         <dt class="text-sm text-gray-600">Subtotal</dt>
         <dd class="text-sm font-medium text-gray-900">
-          {{ cart.summary.price }}$
+          ${{ cart.summary.price }}
         </dd>
       </div>
-      <!-- <div
-        class="flex items-center justify-between border-t border-gray-200 pt-4"
-      >
-        <dt class="flex items-center text-sm text-gray-600">
-          <span>Shipping estimate</span>
-          <a
-            href="#"
-            class="ml-2 shrink-0 text-gray-400 hover:text-gray-500"
-          >
-            <span class="sr-only"
-              >Learn more about how shipping is calculated</span
-            >
-            <QuestionMarkCircleIcon
-              class="h-5 w-5"
-              aria-hidden="true"
-            />
-          </a>
-        </dt>
-        <dd class="text-sm font-medium text-gray-900">$5.00</dd>
-      </div> -->
-
+     
       <div
         class="flex items-center justify-between border-t border-gray-200 pt-4"
       >
@@ -51,6 +31,7 @@ const cart = useCart()
       <UButton
         block
         size="lg"
+        @click="navigateTo('/orders/new')"
         >Checkout</UButton
       >
     </div>

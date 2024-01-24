@@ -17,7 +17,7 @@ const cart = useCart()
           :loading="cart.isCartFetching"
           class="flex space-x-4"
         >
-          <div class="aspect-square w-48 overflow-hidden rounded-lg">
+          <div class="aspect-square w-24 overflow-hidden rounded-lg">
             <VSkeletonImage
               class="h-full w-full object-cover"
               :src="item.product.imageUrl"
@@ -26,7 +26,7 @@ const cart = useCart()
           <div class="flex grow justify-between">
             <div>
               <div>{{ item.product.name }}</div>
-              <div>{{ item.product.price }}$</div>
+              <div>${{ item.product.price }}</div>
             </div>
             <ProductCartManager :product="item.product"></ProductCartManager>
           </div>
