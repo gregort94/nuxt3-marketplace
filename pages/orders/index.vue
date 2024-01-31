@@ -1,15 +1,9 @@
 <script lang="ts" setup>
-import { faker } from '@faker-js/faker'
-
-const onClick = () => {
-  // $fetch('/api/user/orders')
-  // faker.helpers.un
-  console.log(faker.commerce.product())
-}
+const orders = useOrders()
 </script>
 
 <template>
-  <div>
-    <UButton @click="onClick">Click</UButton>
+  <div class="container">
+    <OrderList></OrderList>
   </div>
 </template>

@@ -1,23 +1,15 @@
 <script lang="ts" setup>
 const cart = useCart()
 const notifier = useNotifier()
+const orders = useOrders()
 
 const isPending = ref(false)
 
-const onSubmit = async (formFields: {}) => {
-  isPending.value = true
-  try {
-    const order = await $fetch('/api/user/orders', {
-      method: 'POST',
-      body: formFields,
-    })
-    console.log(order)
-    notifier.success('Order successfully created!')
-  } catch (err) {
-    notifier.warn(err.message)
-  } finally {
-    isPending.value = false
-  }
+const onSubmit = async (formFields: any) => {
+  orders.createOrder(
+    { ...formFields },
+    Object.values(cart.items).map((item) => item.id as string),
+  )
 }
 </script>
 

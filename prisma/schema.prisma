@@ -9,24 +9,26 @@ generator client {
 }
 
 model Product {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(uuid())
   name      String     @unique
   price     Int
   rating    Int
   imageUrl  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  CartItem  CartItem[]
+  cartItem  CartItem[]
 }
 
 model CartItem {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
-  productId Int
+  productId String
   quantity  Int
-  Product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?
 
   @@unique([userId, productId])
 }
@@ -37,19 +39,19 @@ enum PaymentMethod {
 }
 
 model Order {
-  id            Int           @id @default(autoincrement())
+  id            String        @id @default(uuid())
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   userId        String
   address       String
   paymentMethod PaymentMethod
-  OrderItem     OrderItem[]
+  cartItems     CartItem[]
 }
 
-model OrderItem {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orderId   Int
-  Order     Order    @relation(fields: [orderId], references: [id])
-}
+// model OrderItem {
+//   id        Int      @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   orderId   Int
+//   order     Order    @relation(fields: [orderId], references: [id])
+// }

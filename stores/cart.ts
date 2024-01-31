@@ -1,44 +1,38 @@
 import { skipHydrate } from 'pinia'
+import type { CartItemWithProduct } from '~/types/cart'
 import type { ProductPreview } from '~/types/product'
-// import type { UserCartPrduct } from '~/types/cart'
 
 const useCartStore = defineStore('cart', () => {
   const notifier = useNotifier()
   const user = useSupabaseUser()
 
   const items = useLocalStorage<{
-    [id: string]: { quantity: number; product: ProductPreview }
+    [productId: string]: PartialFields<CartItemWithProduct, 'id'>
   }>('cartProducts', {}, { deep: true })
 
-  const isInitialized = ref(false)
-
-  const isCartFetching = ref(false)
-
   const summary = computed(() =>
-    Object.entries(items.value).reduce(
+    Object.values(items.value).reduce(
       (acc, cur) => {
-        acc.price += cur[1].product.price * cur[1].quantity
-        acc.quantity += cur[1].quantity
+        acc.price += cur.product.price * cur.quantity
+        acc.quantity += cur.quantity
         return acc
       },
       { price: 0, quantity: 0 },
     ),
   )
 
+  const isInitialized = ref(false)
+  const isCartFetching = ref(false)
   const initialize = async () => {
     if (!user.value) {
       isInitialized.value = true
       return
     }
-
     try {
       isCartFetching.value = true
       const cartItems = await $fetch('/api/user/cart')
       items.value = Object.fromEntries(
-        cartItems.map((cartItem) => [
-          cartItem.productId,
-          { quantity: cartItem.quantity, product: cartItem.Product },
-        ]),
+        cartItems.map((cartItem) => [cartItem.product.id, cartItem]),
       )
       isInitialized.value = true
     } finally {
@@ -46,7 +40,7 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
-  const pendingProductsIds = ref<Set<number>>(new Set())
+  const pendingProductsIds = ref<Set<string>>(new Set())
 
   const addProduct = async (product: ProductPreview) => {
     const productId = product.id
@@ -55,11 +49,11 @@ const useCartStore = defineStore('cart', () => {
 
     try {
       pendingProductsIds.value.add(productId)
-      await $fetch(`/api/products/${productId}/cart`, {
+      const cartItem = await $fetch(`/api/products/${productId}/cart`, {
         method: 'POST',
         body: { quantity: 1 },
       })
-      items.value[product.id] = { quantity: 1, product }
+      items.value[product.id] = cartItem
     } catch (err: any) {
       notifier.warn(err.message)
     } finally {
@@ -67,7 +61,7 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
-  const setQuantity = async (productId: number, quantity: number) => {
+  const setQuantity = async (productId: string, quantity: number) => {
     if (!user) return (items.value[productId].quantity = quantity)
 
     try {
@@ -84,7 +78,7 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
-  const deleteProduct = async (productId: number) => {
+  const deleteProduct = async (productId: string) => {
     if (!user) return delete items.value[productId]
 
     try {
@@ -114,9 +108,9 @@ const useCartStore = defineStore('cart', () => {
 })
 
 export const useCart = () => {
-  const cart = useCartStore()
-  if (!cart.isInitialized && !cart.isCartFetching && process.client) {
-    cart.initialize()
+  const cartStore = useCartStore()
+  if (!cartStore.isInitialized && !cartStore.isCartFetching && process.client) {
+    cartStore.initialize()
   }
-  return cart
+  return cartStore
 }

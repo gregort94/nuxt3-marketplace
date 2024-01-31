@@ -10,6 +10,6 @@ export default defineEventHandler((event) => {
   const { id: userId } = event.context.user
 
   return prisma.cartItem.delete({
-    where: { userId_productId: { productId: Number(productId), userId } },
+    where: { userId_productId: { productId, userId } },
   })
 })
