@@ -40,8 +40,8 @@ const user = useSupabaseUser()
 
             <!-- Cart -->
             <div class="ml-4 flex">
-              <NavigationButtonCart></NavigationButtonCart>
               <NavigationButtonOrders></NavigationButtonOrders>
+              <NavigationButtonCart></NavigationButtonCart>
             </div>
           </div>
         </div>

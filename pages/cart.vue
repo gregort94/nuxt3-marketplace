@@ -2,11 +2,11 @@
 
 <template>
   <div class="container">
-    <UIPageTitle>Shopping Cart</UIPageTitle>
-
-    <div class="mt-8 flex items-start space-x-10">
-      <CartItems class="grow"></CartItems>
-      <CartSummary></CartSummary>
+    <div class="grid lg:grid-cols-[1fr_400px] gap-10">
+      <CartItems></CartItems>
+      <div>
+        <OrderCreateForm></OrderCreateForm>
+      </div>
     </div>
   </div>
 </template>

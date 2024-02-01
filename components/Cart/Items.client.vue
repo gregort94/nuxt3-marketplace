@@ -13,23 +13,11 @@ const cart = useCart()
         :key="item.product.id"
         class="py-4"
       >
-        <VSkeleton
-          :loading="cart.isCartFetching"
-          class="flex space-x-4"
-        >
-          <div class="aspect-square w-24 overflow-hidden rounded-lg">
-            <VSkeletonImage
-              class="h-full w-full object-cover"
-              :src="item.product.imageUrl"
-            ></VSkeletonImage>
-          </div>
-          <div class="flex grow justify-between">
-            <div>
-              <div>{{ item.product.name }}</div>
-              <div>${{ item.product.price }}</div>
-            </div>
-            <ProductCartManager :product="item.product"></ProductCartManager>
-          </div>
+        <VSkeleton :loading="cart.isCartFetching">
+          <CartItem
+            editable
+            :cart-item="item"
+          ></CartItem>
         </VSkeleton>
       </div>
     </div>

@@ -7,7 +7,7 @@ const cart = useCart()
     <NavigationButton
       icon-name="i-heroicons-shopping-bag"
       text="Cart"
-      :badge-text="cart.isInitialized && cart.summary.quantity"
+      :badge-text="(cart.isInitialized && cart.summary.quantity) || undefined"
     ></NavigationButton>
   </NuxtLink>
 </template>
