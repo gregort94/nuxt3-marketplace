@@ -1,9 +1,10 @@
-import type { Order as ApiOrder } from '@prisma/client'
-import type { CartItemWithProduct } from '~/types/cart'
+import type { Order, OrderItem, Product, Prisma } from '@prisma/client'
+import type { orderSelect } from '~/prisma/utils/order'
 
-export type OrderPreview = Pick<
-  ApiOrder,
-  'id' | 'address' | 'paymentMethod'
-> & {
-  cartItems: CartItemWithProduct[]
+export type OrderWithItems = Prisma.OrderGetPayload<{
+  select: typeof orderSelect
+}>
+
+export type OrderToCreate = Omit<ModelToCreate<Order>, 'userId'> & {
+  items: Omit<ModelToCreate<OrderItem>, 'orderId'>[]
 }

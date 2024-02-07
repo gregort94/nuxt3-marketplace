@@ -3,8 +3,9 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const { id } = event.context.params
-  // await wait(3000)
+  // const { id } = event.context.params
+  const id = getRouterParam(event, 'id')
+
   const product = await prisma.product.findUnique({
     where: { id },
   })

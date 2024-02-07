@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client'
+import { orderSelect } from '~/prisma/utils/order'
+import { OrderToCreate } from '~/types/order'
 
 const prisma = new PrismaClient()
 
@@ -6,19 +8,17 @@ export default defineEventHandler(async (event) => {
   authOnly(event)
 
   const { id: userId } = event.context.user
-  const { address, paymentMethod, cartItemsIds } = await readBody(event)
-  console.log(address, paymentMethod, cartItemsIds)
+  const { address, paymentMethod, items } = await readBody<OrderToCreate>(event)
 
   return prisma.order.create({
     data: {
       address,
       paymentMethod,
       userId,
-      cartItems: {
-        connect: cartItemsIds.map((id: string) => ({
-          id,
-        })),
+      orderItems: {
+        create: items,
       },
     },
+    select: orderSelect,
   })
 })

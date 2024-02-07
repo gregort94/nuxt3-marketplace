@@ -1,10 +1,11 @@
-import type { Order, OrderPreview } from '~/types/order'
+import type { OrderToCreate, OrderWithItems } from '~/types/order'
 
 const useOrdersStore = defineStore('orders', () => {
   const notifier = useNotifier()
   const user = useSupabaseUser()
+  const cart = useCart()
 
-  const items = useLocalStorage<OrderPreview[]>('orders', [])
+  const items = useLocalStorage<OrderWithItems[]>('orders', [])
 
   const isInitialized = ref(false)
   const isOrdersFetching = ref(false)
@@ -19,18 +20,18 @@ const useOrdersStore = defineStore('orders', () => {
     }
   }
 
-  const createOrder = async (
-    orderFields: Pick<Order, 'address' | 'paymentMethod'>,
-    cartItemsIds: string[],
-  ) => {
+  const createOrder = async (orderToCreate: OrderToCreate) => {
     try {
-      const order = await $fetch('/api/user/orders', {
+      const newOrder = await $fetch('/api/user/orders', {
         method: 'POST',
-        body: { ...orderFields, cartItemsIds },
+        body: orderToCreate,
       })
-      console.log(order)
-    } catch (err) {
-      throw err
+      items.value.push(newOrder)
+      await cart.clearCart()
+      navigateTo('/orders')
+      notifier.success('Order created')
+    } catch (err: any) {
+      notifier.warn(err.message)
     }
   }
 

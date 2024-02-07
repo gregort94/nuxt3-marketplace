@@ -31,13 +31,8 @@ const generateProduct = () => ({
   imageUrl: faker.image.urlLoremFlickr({ category: 'animal' }),
 })
 
-const generateProducts = (length: number) => {
-  const products = []
-  for (let i = 0; i < length; i++) {
-    products.push(generateProduct())
-  }
-  return products
-}
+const generateProducts = (length: number) =>
+  Array.from({ length }).map(() => generateProduct())
 
 async function seed() {
   await prisma.product.createMany({ data: generateProducts(100) })

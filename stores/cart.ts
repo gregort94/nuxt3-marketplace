@@ -6,9 +6,9 @@ const useCartStore = defineStore('cart', () => {
   const notifier = useNotifier()
   const user = useSupabaseUser()
 
-  const items = useLocalStorage<{
-    [productId: string]: PartialFields<CartItemWithProduct, 'id'>
-  }>('cartProducts', {}, { deep: true })
+  const items = useLocalStorage<
+    Record<string, PartialFields<CartItemWithProduct, 'id'>>
+  >('cartProducts', {}, { deep: true })
 
   const summary = computed(() =>
     Object.values(items.value).reduce(
@@ -94,6 +94,17 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const clearCart = async () => {
+    if (!user) return (items.value = {})
+
+    try {
+      await $fetch('/api/user/cart', { method: 'DELETE' })
+      items.value = {}
+    } catch (err: any) {
+      notifier.warn(err.message)
+    }
+  }
+
   return {
     initialize,
     items: skipHydrate(items),
@@ -104,6 +115,7 @@ const useCartStore = defineStore('cart', () => {
     summary,
     pendingProductsIds,
     addProduct,
+    clearCart,
   }
 })
 

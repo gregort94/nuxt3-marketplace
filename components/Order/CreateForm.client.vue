@@ -1,15 +1,23 @@
 <script lang="ts" setup>
+import type { Order, Prisma } from '@prisma/client'
+
 const cart = useCart()
 const notifier = useNotifier()
 const orders = useOrders()
 
 const isPending = ref(false)
 
-const onSubmit = async (formFields: any) => {
-  orders.createOrder(
-    { ...formFields },
-    Object.values(cart.items).map((item) => item.id as string),
-  )
+const onSubmit = async (formFields: ModelToCreate<Order>) => {
+  isPending.value = true
+  await orders.createOrder({
+    ...formFields,
+    items: Object.values(cart.items).map((item) => ({
+      productId: item.product.id,
+      price: item.product.price,
+      quantity: item.quantity,
+    })),
+  })
+  isPending.value = false
 }
 </script>
 
