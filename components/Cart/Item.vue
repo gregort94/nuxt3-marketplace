@@ -12,9 +12,9 @@ const props = defineProps<{
     <div class="aspect-square w-24 overflow-hidden rounded-lg">
       <NuxtLink :to="`/products/${cartItem.product.id}`">
         <VSkeletonImage
-          class="h-full w-full object-cover"
+          class="size-full object-cover"
           :src="cartItem.product.imageUrl"
-        ></VSkeletonImage>
+        />
       </NuxtLink>
     </div>
     <div class="flex grow justify-between">
@@ -25,8 +25,9 @@ const props = defineProps<{
       <ProductCartManager
         v-if="editable"
         :product="cartItem.product"
-      ></ProductCartManager>
+      />
       <div v-else>{{ cartItem.quantity }}</div>
     </div>
   </div>
 </template>
+~/types/cartItem

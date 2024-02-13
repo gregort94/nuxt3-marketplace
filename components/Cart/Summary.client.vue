@@ -1,39 +1,33 @@
 <script lang="ts" setup>
 const cart = useCart()
+const user = useSupabaseUser()
 </script>
 
 <template>
-  <!-- Order summary -->
-  <section
-    class="min-w-[300px] rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:p-8"
-  >
-    <h2 class="text-lg font-medium text-gray-900">Order summary</h2>
-
-    <dl class="mt-6 space-y-4">
+  <UCard>
+    <div class="divide-y divide-gray-200">
       <div class="flex items-center justify-between">
-        <dt class="text-sm text-gray-600">Subtotal</dt>
-        <dd class="text-sm font-medium text-gray-900">
-          ${{ cart.summary.price }}
-        </dd>
+        <div class="font-medium text-gray-900">Total:</div>
+        <div>${{ cart.summary.price }}</div>
       </div>
-     
+      <template v-if="user">
+        <OrderCreateForm
+          v-if="cart.isInitialized && Object.keys(cart.items).length"
+          class="mt-4 pt-4"
+        />
+      </template>
       <div
-        class="flex items-center justify-between border-t border-gray-200 pt-4"
+        v-else
+        class="mt-4 pt-4"
       >
-        <dt class="text-base font-medium text-gray-900">Order total</dt>
-        <dd class="text-base font-medium text-gray-900">
-          {{ cart.summary.price }}$
-        </dd>
+        <p class="mb-4 flex items-center space-x-2">
+          <UIcon name="i-heroicons-exclamation-triangle" />
+          <span>Please authorize to place an order</span>
+        </p>
+        <NuxtLink to="/login">
+          <UButton block>Log in</UButton>
+        </NuxtLink>
       </div>
-    </dl>
-
-    <div class="mt-6">
-      <UButton
-        block
-        size="lg"
-        @click="navigateTo('/orders/new')"
-        >Checkout</UButton
-      >
     </div>
-  </section>
+  </UCard>
 </template>

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { productPreviewSelect } from '~/prisma/utils/product'
 import { ProductFilters } from '~/types/product'
 const prisma = new PrismaClient()
 
@@ -25,7 +26,7 @@ export default defineEventHandler(async (event) => {
     skip: skip && Number(skip),
     take: take && Number(take),
     where,
-    select: { id: true, imageUrl: true, name: true, price: true, rating: true },
+    select: productPreviewSelect,
     orderBy: {
       id: 'asc',
     },

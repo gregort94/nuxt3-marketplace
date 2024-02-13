@@ -4,23 +4,33 @@ const cart = useCart()
 
 <template>
   <div>
-    <div
-      v-if="Object.keys(cart.items).length"
-      class="divide-y divide-gray-200 border-y border-gray-200"
-    >
+    <div class="flex flex-col gap-4">
       <div
         v-for="item in cart.items"
         :key="item.product.id"
-        class="py-4"
       >
         <VSkeleton :loading="cart.isCartFetching">
           <CartItem
             editable
             :cart-item="item"
-          ></CartItem>
+          />
         </VSkeleton>
       </div>
+
+      <template v-if="!Object.keys(cart.items).length && cart.isCartFetching">
+        <VSkeleton
+          v-for="item in 3"
+          :key="item"
+          :loading="true"
+          class="h-12"
+        />
+      </template>
     </div>
-    <div v-else>Cart is empty</div>
+    <div v-if="cart.isInitialized && !Object.keys(cart.items).length">
+      <span class="text-xl font-semibold">Cart is empty</span>
+      <NuxtLink to="/products">
+        <UButton variant="link">Choose products</UButton>
+      </NuxtLink>
+    </div>
   </div>
 </template>

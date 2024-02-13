@@ -7,16 +7,10 @@ const props = defineProps<{
 </script>
 
 <template>
-  <UChip
-    :text="badgeText"
-    size="2xl"
-    :show="!!badgeText"
+  <UButton
+    variant="link"
+    :icon="iconName"
+    color="gray"
+    >{{ text }}</UButton
   >
-    <UButton
-      variant="link"
-      :icon="iconName"
-      color="gray"
-      >{{ text }}</UButton
-    >
-  </UChip>
 </template>

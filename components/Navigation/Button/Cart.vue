@@ -4,10 +4,23 @@ const cart = useCart()
 
 <template>
   <NuxtLink to="/cart">
-    <NavigationButton
-      icon-name="i-heroicons-shopping-bag"
-      text="Cart"
-      :badge-text="(cart.isInitialized && cart.summary.quantity) || undefined"
-    ></NavigationButton>
+    <ClientOnly>
+      <UChip
+        :text="cart.summary.quantity"
+        :show="cart.isInitialized && !!cart.summary.quantity"
+        size="2xl"
+      >
+        <NavigationButton
+          icon-name="i-heroicons-shopping-bag"
+          text="Cart"
+        ></NavigationButton>
+      </UChip>
+      <template #fallback>
+        <NavigationButton
+          icon-name="i-heroicons-shopping-bag"
+          text="Cart"
+        ></NavigationButton>
+      </template>
+    </ClientOnly>
   </NuxtLink>
 </template>

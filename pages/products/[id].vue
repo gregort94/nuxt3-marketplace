@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-import type { Product, ProductPreview } from '~/types/product'
+import type { Product } from '~/types/product'
 
 const route = useRoute()
 const { id } = route.params
 
 const { data: product, pending } = await useLazyFetch<Product>(
   `/api/products/${id}`,
-)
-
-const productPreview = computed(
-  () => product.value && formatProductToProductPreview(product.value),
 )
 </script>
 
@@ -21,8 +17,8 @@ const productPreview = computed(
           <VSkeletonImage
             :loading="pending"
             :src="product?.imageUrl"
-            class="h-full w-full object-cover"
-          ></VSkeletonImage>
+            class="size-full object-cover"
+          />
         </div>
       </div>
       <div class="flex flex-col items-start space-y-1">
@@ -40,12 +36,12 @@ const productPreview = computed(
           <RatingValue
             v-if="product"
             :value="product.rating"
-          ></RatingValue>
+          />
         </VSkeleton>
         <ProductCartManager
           v-if="product"
-          :product="productPreview as ProductPreview"
-        ></ProductCartManager>
+          :product="product"
+        />
       </div>
     </div>
   </div>

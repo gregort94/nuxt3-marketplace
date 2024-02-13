@@ -1,14 +1,16 @@
 import { skipHydrate } from 'pinia'
-import type { CartItemWithProduct } from '~/types/cart'
+import type { CartItem } from '~/types/cartItem'
 import type { ProductPreview } from '~/types/product'
 
 const useCartStore = defineStore('cart', () => {
   const notifier = useNotifier()
   const user = useSupabaseUser()
 
-  const items = useLocalStorage<
-    Record<string, PartialFields<CartItemWithProduct, 'id'>>
-  >('cartProducts', {}, { deep: true })
+  const items = useLocalStorage<Record<string, PartialFields<CartItem, 'id'>>>(
+    'cartProducts',
+    {},
+    { deep: true },
+  )
 
   const summary = computed(() =>
     Object.values(items.value).reduce(
@@ -45,7 +47,7 @@ const useCartStore = defineStore('cart', () => {
   const addProduct = async (product: ProductPreview) => {
     const productId = product.id
 
-    if (!user) return (items.value[productId] = { quantity: 1, product })
+    if (!user.value) return (items.value[productId] = { quantity: 1, product })
 
     try {
       pendingProductsIds.value.add(productId)
@@ -62,7 +64,7 @@ const useCartStore = defineStore('cart', () => {
   }
 
   const setQuantity = async (productId: string, quantity: number) => {
-    if (!user) return (items.value[productId].quantity = quantity)
+    if (!user.value) return (items.value[productId].quantity = quantity)
 
     try {
       pendingProductsIds.value.add(productId)
@@ -79,7 +81,7 @@ const useCartStore = defineStore('cart', () => {
   }
 
   const deleteProduct = async (productId: string) => {
-    if (!user) return delete items.value[productId]
+    if (!user.value) return delete items.value[productId]
 
     try {
       pendingProductsIds.value.add(productId)
@@ -95,7 +97,7 @@ const useCartStore = defineStore('cart', () => {
   }
 
   const clearCart = async () => {
-    if (!user) return (items.value = {})
+    if (!user.value) return (items.value = {})
 
     try {
       await $fetch('/api/user/cart', { method: 'DELETE' })
@@ -104,6 +106,12 @@ const useCartStore = defineStore('cart', () => {
       notifier.warn(err.message)
     }
   }
+
+  watch(user, (value) => {
+    if (!value) {
+      clearCart()
+    }
+  })
 
   return {
     initialize,

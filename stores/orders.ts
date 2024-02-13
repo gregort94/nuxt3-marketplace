@@ -35,12 +35,18 @@ const useOrdersStore = defineStore('orders', () => {
     }
   }
 
+  const clearOrders = () => {
+    items.value = []
+    isInitialized.value = false
+  }
+
   return {
     items,
     isInitialized,
     isOrdersFetching,
     initialize,
     createOrder,
+    clearOrders,
   }
 })
 

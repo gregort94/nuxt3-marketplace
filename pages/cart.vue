@@ -1,12 +1,12 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const cart = useCart()
+</script>
 
 <template>
   <div class="container">
-    <div class="grid lg:grid-cols-[1fr_400px] gap-10">
-      <CartItems></CartItems>
-      <div>
-        <OrderCreateForm></OrderCreateForm>
-      </div>
+    <div class="grid gap-10 lg:grid-cols-[1fr_400px]">
+      <CartItems />
+      <CartSummary />
     </div>
   </div>
 </template>

@@ -10,5 +10,6 @@ export default defineEventHandler(async (event) => {
   return prisma.order.findMany({
     where: { userId },
     select: orderSelect,
+    orderBy: { createdAt: 'desc' },
   })
 })

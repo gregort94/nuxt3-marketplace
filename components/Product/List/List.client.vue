@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import type { ProductPreview } from '~/types/product'
 
-// const props = defineProps()
-useAppConfig()
 const filters = useProductFilters()
 const ITEMS_PER_PAGE = 20
 const {
@@ -38,12 +36,12 @@ watch(filters, () => {
             class="aspect-square w-full overflow-hidden rounded-lg group-hover:opacity-75"
           >
             <VSkeletonImage
-              class="h-full w-full object-cover"
+              class="size-full object-cover"
               :src="product.imageUrl"
-            ></VSkeletonImage>
+            />
           </div>
         </NuxtLink>
-        <RatingValue :value="product.rating"></RatingValue>
+        <RatingValue :value="product.rating" />
         <h3 class="mt-4 line-clamp-1 font-medium text-gray-900">
           {{ product.name }}
         </h3>
@@ -51,7 +49,7 @@ watch(filters, () => {
         <ProductCartManager
           :product="product"
           @click.stop
-        ></ProductCartManager>
+        />
       </div>
       <template v-if="addItemsPending || (pending && !list)">
         <USkeleton
@@ -60,11 +58,10 @@ watch(filters, () => {
             : ITEMS_PER_PAGE"
           :key="index"
           class="aspect-square"
-        >
-        </USkeleton>
+        />
       </template>
 
-      <VOverlayLoading v-if="pending && list"></VOverlayLoading>
+      <VOverlayLoading v-if="pending && list" />
     </div>
   </InfiniteScrollContainer>
 </template>
