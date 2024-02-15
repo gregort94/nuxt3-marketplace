@@ -36,7 +36,7 @@ const signUp = async (values) => {
           <UInput
             :model-value="value"
             @update:model-value="handleChange"
-          ></UInput>
+          />
         </UFormGroup>
       </VeeField>
       <VeeField
@@ -51,7 +51,7 @@ const signUp = async (values) => {
           <UInput
             :model-value="value"
             @update:model-value="handleChange"
-          ></UInput>
+          />
         </UFormGroup>
       </VeeField>
       <UButton

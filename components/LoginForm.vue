@@ -16,50 +16,68 @@ const logIn = async (values) => {
     router.push('/')
   }
 }
+
+const github = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({ provider: 'github' })
+
+  if (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
-  <VeeForm
-    class="space-y-4"
-    @submit="logIn"
-  >
-    <VeeField
-      v-slot="{ value, handleChange, errorMessage, meta }"
-      :model-value="'gregort94@gmail.com'"
-      name="email"
-      rules="required|email"
+  <div>
+    <VeeForm
+      class="space-y-4"
+      @submit="logIn"
     >
-      <UFormGroup
-        label="Email"
-        :error="meta.touched && errorMessage"
+      <VeeField
+        v-slot="{ value, handleChange, errorMessage, meta }"
+        :model-value="'gregort94@gmail.com'"
+        name="email"
+        rules="required|email"
       >
-        <UInput
-          :model-value="value"
-          @update:model-value="handleChange"
-        ></UInput>
-      </UFormGroup>
-    </VeeField>
-    <VeeField
-      v-slot="{ value, handleChange, meta, errorMessage }"
-      name="password"
-      rules="required"
-      :model-value="'g3i8g4'"
-    >
-      <UFormGroup
-        :error="meta.touched && errorMessage"
-        label="Password"
+        <UFormGroup
+          label="Email"
+          :error="meta.touched && errorMessage"
+        >
+          <UInput
+            :model-value="value"
+            @update:model-value="handleChange"
+          />
+        </UFormGroup>
+      </VeeField>
+      <VeeField
+        v-slot="{ value, handleChange, meta, errorMessage }"
+        name="password"
+        rules="required"
+        :model-value="'g3i8g4'"
       >
-        <UInput
-          :model-value="value"
-          @update:model-value="handleChange"
-        ></UInput>
-      </UFormGroup>
-    </VeeField>
+        <UFormGroup
+          :error="meta.touched && errorMessage"
+          label="Password"
+        >
+          <UInput
+            :model-value="value"
+            @update:model-value="handleChange"
+          />
+        </UFormGroup>
+      </VeeField>
+      <UButton
+        class="w-full"
+        type="submit"
+        block
+        >Log In</UButton
+      >
+    </VeeForm>
+    <UDivider label="OR" />
     <UButton
-      class="w-full"
-      type="submit"
+      color="black"
+      label="Login with GitHub"
+      icon="i-simple-icons-github"
       block
-      >Log In</UButton
-    >
-  </VeeForm>
+      @click="github"
+    />
+  </div>
 </template>

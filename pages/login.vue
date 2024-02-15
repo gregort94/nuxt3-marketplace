@@ -10,7 +10,7 @@ definePageMeta({ middleware: 'guest-only' })
       >
         Log In
       </div>
-      <LoginForm></LoginForm>
+      <LoginForm />
       <div>
         Don't have an account?
         <NuxtLink to="/signUp"
