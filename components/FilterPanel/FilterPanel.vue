@@ -1,18 +1,20 @@
-import { FilterPanelItem } from '#build/components'
 <script lang="ts" setup></script>
 
 <template>
-  <div class="space-y-10 divide-y divide-gray-200">
-    <FilterPanelItem :name="'Rating'">
-      <QueryFilter
-        v-slot="{ handleChange, value }"
-        :name="'rating'"
-      >
-        <RatingPicker
-          :model-value="value ? Number(value) : undefined"
-          @update:model-value="handleChange"
-        ></RatingPicker>
-      </QueryFilter>
+  <div class="space-y-4">
+    <FilterPanelItem label="Sort">
+      <ProductFilterSort />
+    </FilterPanelItem>
+    <FilterPanelItem label="Search by name">
+      <ProductFilterSearch />
+    </FilterPanelItem>
+    <UDivider />
+    <FilterPanelItem label="Rating">
+      <ProductFilterRating />
+    </FilterPanelItem>
+    <UDivider />
+    <FilterPanelItem label="Price">
+      <ProductFilterPrice />
     </FilterPanelItem>
   </div>
   <!-- <div>

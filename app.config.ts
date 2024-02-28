@@ -1,7 +1,9 @@
+import { RATING_SYSTEM } from '~/constants/general'
+
 export default defineAppConfig({
   ui: {
     primary: 'sky',
     gray: 'cool',
   },
-  ratingSystem: 5,
+  ratingSystem: RATING_SYSTEM,
 })

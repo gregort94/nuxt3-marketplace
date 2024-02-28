@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-definePageMeta({ middleware: 'guest-only' })
+definePageMeta({ middleware: 'guard-guest-only' })
 </script>
 
 <template>

@@ -5,8 +5,8 @@ const props = defineProps<{ name: string }>()
 
 const model = useRouteQuery(props.name)
 
-const handleChange = (value: any) => {
-  model.value = String(value)
+const handleChange = (value: string | string[] | null) => {
+  model.value = value
 }
 </script>
 
@@ -14,5 +14,5 @@ const handleChange = (value: any) => {
   <slot
     :value="model"
     :handle-change="handleChange"
-  ></slot>
+  />
 </template>

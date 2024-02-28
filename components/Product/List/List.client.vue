@@ -41,7 +41,7 @@ watch(filters, () => {
             />
           </div>
         </NuxtLink>
-        <RatingValue :value="product.rating" />
+        <RatingValue :value="Number(product.rating)" />
         <h3 class="mt-4 line-clamp-1 font-medium text-gray-900">
           {{ product.name }}
         </h3>

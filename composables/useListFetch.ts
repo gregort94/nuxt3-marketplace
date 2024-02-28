@@ -44,7 +44,7 @@ export default <T>(
         query: {
           ...options.query,
           take: itemsPerPage,
-          skip: data.value.length,
+          skip: data.value?.length,
         },
       })
       data.value.push(...list)

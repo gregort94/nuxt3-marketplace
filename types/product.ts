@@ -1,5 +1,6 @@
 import type { Prisma } from '@prisma/client'
 import type { SerializeObject } from 'nitropack'
+import type { PRODUCT_SORTS } from '~/constants/sorts'
 import type {
   productPreviewSelect,
   productSelect,
@@ -17,6 +18,10 @@ export type ProductPreview = SerializeObject<
   }>
 >
 
+export type ProductSort = keyof typeof PRODUCT_SORTS
+
 export type ProductFilters = {
-  rating?: string
+  rating?: number
+  search?: string
+  sort?: ProductSort
 }

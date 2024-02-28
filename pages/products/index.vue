@@ -7,10 +7,10 @@ useHead({ title: 'Products' })
     <div class="grid grid-cols-[200px_1fr] gap-8">
       <div>
         <div class="sticky top-[130px]">
-          <FilterPanel></FilterPanel>
+          <FilterPanel />
         </div>
       </div>
-      <ProductList></ProductList>
+      <ProductList />
     </div>
   </div>
 </template>

@@ -1,12 +1,15 @@
 <script lang="ts" setup>
-const props = defineProps<{ name: string }>()
+const props = defineProps<{ label: string }>()
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <div class="block text-sm font-medium text-gray-900">{{ name }}</div>
     <div>
       <slot></slot>
     </div>
-  </div>
+  </div> -->
+  <UFormGroup :label="label">
+    <slot />
+  </UFormGroup>
 </template>

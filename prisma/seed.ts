@@ -1,10 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
-import { getPercentSteps } from '../utils/ratingSystem'
+import { MAX_PRICE } from '~/constants/general'
 
 const prisma = new PrismaClient()
-
-const ratingSystemPercentSteps = getPercentSteps(5)
 
 const memoizeUnique = <T>(callback: () => T) => {
   const uniqItems = new Set()
@@ -21,15 +19,16 @@ const memoizeUnique = <T>(callback: () => T) => {
 
 const getUniqProductName = memoizeUnique(faker.commerce.productName)
 
-const generateProduct = () => ({
-  name: getUniqProductName(),
-  price: Number(faker.commerce.price()),
-  rating:
-    ratingSystemPercentSteps[
-      Math.floor(Math.random() * ratingSystemPercentSteps.length)
-    ],
-  imageUrl: faker.image.urlLoremFlickr({ category: 'animal' }),
-})
+const generateProduct = () => {
+  const name = getUniqProductName()
+  const category = name.split(' ')[2]
+  return {
+    name,
+    price: Number(faker.commerce.price({ min: 1, max: MAX_PRICE })),
+    rating: Number((Math.random() * 4 + 1).toFixed(1)),
+    imageUrl: faker.image.urlLoremFlickr({ category }),
+  }
+}
 
 const generateProducts = (length: number) =>
   Array.from({ length }).map(() => generateProduct())

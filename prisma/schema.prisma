@@ -13,7 +13,7 @@ model Product {
   id        String      @id @default(uuid())
   name      String      @unique
   price     Int
-  rating    Int
+  rating    Decimal
   imageUrl  String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt

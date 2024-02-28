@@ -20,13 +20,19 @@ const user = useSupabaseUser()
         v-else
         class="mt-4 pt-4"
       >
-        <p class="mb-4 flex items-center space-x-2">
-          <UIcon name="i-heroicons-exclamation-triangle" />
-          <span>Please authorize to place an order</span>
+        <p class="flex items-center">
+          <UIcon
+            class="mr-2"
+            name="i-heroicons-exclamation-triangle"
+          />
+          <span>
+            Please
+            <NuxtLink to="/login">
+              <UButton variant="link">Log In</UButton>
+            </NuxtLink>
+            to place an order
+          </span>
         </p>
-        <NuxtLink to="/login">
-          <UButton block>Log in</UButton>
-        </NuxtLink>
       </div>
     </div>
   </UCard>

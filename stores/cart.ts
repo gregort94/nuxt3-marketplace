@@ -108,7 +108,9 @@ const useCartStore = defineStore('cart', () => {
   }
 
   watch(user, (value) => {
-    if (!value) {
+    if (value) {
+      initialize()
+    } else {
       clearCart()
     }
   })

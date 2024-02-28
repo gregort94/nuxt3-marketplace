@@ -35,7 +35,7 @@ const { data: product, pending } = await useLazyFetch<Product>(
         <VSkeleton :loading="pending">
           <RatingValue
             v-if="product"
-            :value="product.rating"
+            :value="Number(product.rating)"
           />
         </VSkeleton>
         <ProductCartManager

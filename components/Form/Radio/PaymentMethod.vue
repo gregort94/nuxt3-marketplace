@@ -25,7 +25,7 @@ const options = Object.entries(PAYMENT_METHODS).map(([key, value]) => ({
       :value="option.value"
     >
       <template #label>
-        <UIcon :name="option.icon"></UIcon>
+        <UIcon :name="option.icon" />
         {{ option.label }}
       </template>
     </URadio>
