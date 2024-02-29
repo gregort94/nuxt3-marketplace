@@ -3,19 +3,8 @@ import type { ProductPreview } from '~/types/product'
 
 const filters = useProductFilters()
 const ITEMS_PER_PAGE = 20
-const {
-  data: list,
-  pending,
-  addItems,
-  addItemsPending,
-  itemsRemain,
-} = useListFetch<ProductPreview>(
-  '/api/products',
-  {
-    query: filters,
-  },
-  ITEMS_PER_PAGE,
-)
+const { list, isLoading, addItems, isAdding, itemsRemain } =
+  useListFetch<ProductPreview>('/api/products', filters, ITEMS_PER_PAGE)
 
 watch(filters, () => {
   window.scrollTo(0, 0)
@@ -51,7 +40,7 @@ watch(filters, () => {
           @click.stop
         />
       </div>
-      <template v-if="addItemsPending || (pending && !list)">
+      <template v-if="isAdding || (isLoading && !list)">
         <USkeleton
           v-for="index in list && itemsRemain < ITEMS_PER_PAGE
             ? itemsRemain
@@ -61,7 +50,7 @@ watch(filters, () => {
         />
       </template>
 
-      <VOverlayLoading v-if="pending && list" />
+      <VOverlayLoading v-if="isLoading && list" />
     </div>
   </InfiniteScrollContainer>
 </template>

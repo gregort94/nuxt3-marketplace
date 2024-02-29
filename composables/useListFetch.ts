@@ -1,66 +1,66 @@
 export default <T>(
   url: string,
-  options: { query?: { [key: string]: string | string[] | null } },
+  filters?: Record<string, MaybeArray<string | number> | undefined | boolean>,
   itemsPerPage: number = 20,
 ) => {
   type ApiResponse = { list: T[]; total?: number }
 
-  const data = ref<T[]>()
+  const list = ref<T[]>()
 
   const total = ref<number>()
-  const totalReached = computed(() => data.value?.length === total.value)
+  const isTotalReached = computed(() => list.value?.length === total.value)
   const itemsRemain = computed(
-    () => data.value && total.value && total.value - data.value.length,
+    () => list.value && total.value && total.value - list.value.length,
   )
 
-  const pending = ref(false)
+  const isLoading = ref(false)
   const fetchList = async () => {
-    pending.value = true
+    isLoading.value = true
     try {
-      const { list, total: totalItems } = await $fetch<ApiResponse>(url, {
-        query: { ...options.query, take: itemsPerPage, count: true },
+      const response = await $fetch<ApiResponse>(url, {
+        query: filters,
       })
-      data.value = list
-      total.value = totalItems
+      list.value = response.list
+      total.value = response.total
     } finally {
-      pending.value = false
+      isLoading.value = false
     }
   }
 
   fetchList()
 
-  if (options.query) {
-    watch(options.query, () => {
+  if (filters && isReactive(filters)) {
+    watch(filters, () => {
       fetchList()
     })
   }
-  const addItemsPending = ref(false)
+  const isAdding = ref(false)
   const addItems = async () => {
-    if (totalReached.value) return
+    if (isTotalReached.value) return
 
-    addItemsPending.value = true
+    isAdding.value = true
     try {
-      const { list } = await $fetch<ApiResponse>(url, {
+      const response = await $fetch<ApiResponse>(url, {
         query: {
-          ...options.query,
+          ...(filters || {}),
           take: itemsPerPage,
-          skip: data.value?.length,
+          skip: list.value?.length,
         },
       })
-      data.value.push(...list)
+      ;(list.value as T[]).push(...response.list)
     } finally {
-      addItemsPending.value = false
+      isAdding.value = false
     }
   }
 
   return {
-    pending,
-    addItemsPending,
-    data,
+    isLoading,
+    isAdding,
+    list,
     fetchList,
     addItems,
     total,
-    totalReached,
+    isTotalReached,
     itemsRemain,
   }
 }
