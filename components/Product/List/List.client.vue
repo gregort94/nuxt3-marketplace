@@ -31,6 +31,14 @@ watch(filters, () => {
           </div>
         </NuxtLink>
         <RatingValue :value="Number(product.rating)" />
+        <div>
+          <div
+            v-for="{ category } in product.categories"
+            :key="category.id"
+          >
+            {{ category.name }}
+          </div>
+        </div>
         <h3 class="mt-4 line-clamp-1 font-medium text-gray-900">
           {{ product.name }}
         </h3>

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { useRouteQuery } from '@vueuse/router'
 import { PRODUCT_SORTS, DEFAULT_PRODUCT_SORT } from '~/constants/sorts'
 import type { ProductSort } from '~/types/product'
 
-const query = useRouteQuery<ProductSort | undefined>('sort')
+const modelValue = defineModel<ProductSort>({ default: DEFAULT_PRODUCT_SORT })
 
 const options = Object.entries(PRODUCT_SORTS).map(([value, label]) => ({
   value,
@@ -13,8 +12,7 @@ const options = Object.entries(PRODUCT_SORTS).map(([value, label]) => ({
 
 <template>
   <USelect
-    :model-value="query || DEFAULT_PRODUCT_SORT"
+    v-model="modelValue"
     :options="options"
-    @update:model-value="query = $event"
   />
 </template>

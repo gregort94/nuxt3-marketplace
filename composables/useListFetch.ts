@@ -18,7 +18,11 @@ export default <T>(
     isLoading.value = true
     try {
       const response = await $fetch<ApiResponse>(url, {
-        query: filters,
+        query: {
+          ...filters,
+          count: true,
+          take: itemsPerPage,
+        },
       })
       list.value = response.list
       total.value = response.total

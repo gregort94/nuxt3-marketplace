@@ -24,4 +24,7 @@ export type ProductFilters = {
   rating?: number
   search?: string
   sort?: ProductSort
+  categories?: string[]
+  priceFrom?: number
+  priceTo?: number
 }

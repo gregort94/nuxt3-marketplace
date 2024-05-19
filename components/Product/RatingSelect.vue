@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { useRouteQuery } from '@vueuse/router'
+const modelValue = defineModel<number>({ default: 1 })
 
 const { ratingSystem } = useAppConfig()
-
-const filters = useProductFilters()
 
 const steps = computed(() =>
   Array.from({ length: ratingSystem })
@@ -17,9 +15,8 @@ const steps = computed(() =>
     <URadio
       v-for="value in steps"
       :key="value"
-      :model-value="filters.rating || 1"
+      v-model="modelValue"
       :value="value"
-      @update:model-value="filters.rating = $event"
     >
       <template #label>
         <div class="flex space-x-2">

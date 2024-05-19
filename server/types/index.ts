@@ -1,7 +1,11 @@
-export type QueryInput<T> = {
-  [K in keyof T]: T[K] extends number
-    ? string
-    : T[K] extends Array<number>
-      ? Array<string>
-      : T[K]
+type Stringify<T> = T extends undefined
+  ? undefined
+  : T extends Array<any>
+    ? string[] | string
+    : string
+
+export type StringifyQuery<
+  T extends Record<string, MaybeArray<string | number | boolean>>,
+> = {
+  [K in keyof T]: Stringify<T[K]>
 }

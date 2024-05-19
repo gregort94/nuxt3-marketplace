@@ -1,21 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
-import { MAX_PRICE } from '~/constants/general'
+import { memoizeUnique, pickRandomElements } from '../utils/general'
+import { MAX_PRICE } from '../constants/general'
 
 const prisma = new PrismaClient()
-
-const memoizeUnique = <T>(callback: () => T) => {
-  const uniqItems = new Set()
-
-  return () => {
-    let res
-    do {
-      res = callback()
-    } while (uniqItems.has(res))
-    uniqItems.add(res)
-    return res
-  }
-}
 
 const getUniqProductName = memoizeUnique(faker.commerce.productName)
 
@@ -34,7 +22,34 @@ const generateProducts = (length: number) =>
   Array.from({ length }).map(() => generateProduct())
 
 async function seed() {
-  await prisma.product.createMany({ data: generateProducts(100) })
+  const createProducts = async () => {
+    await prisma.product.createMany({ data: generateProducts(100) })
+    const items = await prisma.product.findMany({ select: { id: true } })
+    return items.map((item) => item.id)
+  }
+  const createCategories = async () => {
+    await prisma.category.createMany({
+      data: ['shoes', 'clothes', 'accessories'].map((name) => ({ name })),
+    })
+    const items = await prisma.category.findMany({ select: { id: true } })
+    return items.map((item) => item.id)
+  }
+
+  const [productsIds, categoriesIds] = await Promise.all([
+    createProducts(),
+    createCategories(),
+  ])
+
+  await prisma.categoriesOnProducts.createMany({
+    data: productsIds
+      .map((productId) =>
+        pickRandomElements(categoriesIds, 1, 3).map((categoryId) => ({
+          productId,
+          categoryId,
+        })),
+      )
+      .flat(),
+  })
 }
 
 seed()

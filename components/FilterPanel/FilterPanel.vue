@@ -1,55 +1,45 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouteQuery } from '@vueuse/router'
+const productFilters = useProductFilters()
+</script>
 
 <template>
   <div class="space-y-4">
+    <FilterPanelItem label="Categories">
+      <ProductCategoriesPicker v-model="productFilters.categories" />
+    </FilterPanelItem>
     <FilterPanelItem label="Sort">
-      <ProductFilterSort />
+      <ProductSortSelect v-model="productFilters.sort" />
     </FilterPanelItem>
     <FilterPanelItem label="Search by name">
-      <ProductFilterSearch />
+      <VConfirmField
+        v-slot="{ handleChange, value }"
+        v-model="productFilters.search"
+      >
+        <ProductSearchInput
+          :model-value="value"
+          @update:model-value="handleChange"
+        />
+      </VConfirmField>
     </FilterPanelItem>
     <UDivider />
     <FilterPanelItem label="Rating">
-      <ProductFilterRating />
+      <ProductRatingSelect v-model="productFilters.rating" />
     </FilterPanelItem>
     <UDivider />
     <FilterPanelItem label="Price">
-      <ProductFilterPrice />
+      <VConfirmField
+        v-slot="{ handleChange, value }"
+        :model-value="{
+          from: productFilters.priceFrom,
+          to: productFilters.priceTo,
+        }"
+      >
+        <ProductPriceRangeInput
+          :model-value="value"
+          @update:model-value="handleChange"
+        />
+      </VConfirmField>
     </FilterPanelItem>
   </div>
-  <!-- <div>
-    <form class="space-y-10 divide-y divide-gray-200">
-      <div
-        v-for="(section, sectionIdx) in filters"
-        :key="section.name"
-        :class="sectionIdx === 0 ? null : 'pt-10'"
-      >
-        <fieldset>
-          <legend class="block text-sm font-medium text-gray-900">
-            {{ section.name }}
-          </legend>
-          <div class="pt-6">
-            <div
-              v-for="(option, optionIdx) in section.options"
-              :key="option.value"
-              class="flex items-center"
-            >
-              <input
-                :id="`${section.id}-${optionIdx}`"
-                :name="`${section.id}[]`"
-                :value="option.value"
-                type="checkbox"
-                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label
-                :for="`${section.id}-${optionIdx}`"
-                class="ml-3 text-sm text-gray-600"
-                >{{ option.label }}</label
-              >
-            </div>
-          </div>
-        </fieldset>
-      </div>
-    </form>
-  </div> -->
 </template>

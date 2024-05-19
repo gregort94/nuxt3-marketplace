@@ -9,16 +9,32 @@ generator client {
   output   = "../node_modules/.prisma/client"
 }
 
+model Category {
+  id       String                 @id @default(uuid())
+  name     String                 @unique
+  products CategoriesOnProducts[]
+}
+
 model Product {
-  id        String      @id @default(uuid())
-  name      String      @unique
-  price     Int
-  rating    Decimal
-  imageUrl  String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  cartItem  CartItem[]
-  orderItem OrderItem[]
+  id         String                 @id @default(uuid())
+  name       String                 @unique
+  price      Int
+  rating     Decimal
+  imageUrl   String
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+  cartItem   CartItem[]
+  orderItem  OrderItem[]
+  categories CategoriesOnProducts[]
+}
+
+model CategoriesOnProducts {
+  productId  String
+  categoryId String
+  product    Product  @relation(fields: [productId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([productId, categoryId])
 }
 
 model CartItem {

@@ -10,7 +10,6 @@ export default defineEventHandler(async (event) => {
   const { id: productId } = event.context.params
   const { quantity } = await readBody(event)
   const { id: userId } = event.context.user
-
   return prisma.cartItem.upsert({
     where: { userId_productId: { productId, userId } },
     update: {

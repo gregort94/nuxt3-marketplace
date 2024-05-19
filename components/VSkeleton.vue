@@ -11,6 +11,6 @@ const props = defineProps<{ loading?: boolean; blockActions?: boolean }>()
     <div
       v-if="blockActions && loading"
       class="absolute inset-0 opacity-35"
-    ></div>
+    />
   </div>
 </template>

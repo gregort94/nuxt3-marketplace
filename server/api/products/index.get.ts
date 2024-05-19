@@ -1,16 +1,26 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { DEFAULT_PRODUCT_SORT } from '~/constants/sorts'
 import { productPreviewSelect } from '~/prisma/utils/product'
-import { QueryInput } from '~/server/types'
+import { StringifyQuery } from '~/server/types'
 import { getSortByString } from '~/server/utils/getSortByString'
 import { ProductFilters } from '~/types/product'
 
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const { rating, skip, take, count, search, sort } =
+  const {
+    rating,
+    skip,
+    take,
+    count,
+    search,
+    sort,
+    categories,
+    priceFrom,
+    priceTo,
+  } =
     getQuery<
-      QueryInput<
+      StringifyQuery<
         ProductFilters & { skip?: number; take?: number; count?: boolean }
       >
     >(event)
@@ -23,6 +33,19 @@ export default defineEventHandler(async (event) => {
       contains: search && search.trim().toLowerCase(),
       mode: 'insensitive',
     },
+    categories:
+      (categories && {
+        some: {
+          category: {
+            name: { in: [categories].flat() },
+          },
+        },
+      }) ||
+      undefined,
+    price: {
+      gt: (priceFrom && Number(priceFrom)) || undefined,
+      lt: (priceTo && Number(priceTo)) || undefined,
+    },
   }
 
   let total
@@ -32,8 +55,8 @@ export default defineEventHandler(async (event) => {
     })
   }
   const list = await prisma.product.findMany({
-    skip: skip && Number(skip),
-    take: take && Number(take),
+    skip: (skip && Number(skip)) || undefined,
+    take: (take && Number(take)) || undefined,
     where,
     select: productPreviewSelect,
     orderBy: { [order.field]: order.order },

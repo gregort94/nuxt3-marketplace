@@ -7,6 +7,7 @@ export const productSelect = {
   imageUrl: true,
   rating: true,
   updatedAt: true,
+  categories: { select: { category: true } },
 } satisfies Prisma.ProductSelect
 
 export const productPreviewSelect = {
@@ -15,4 +16,5 @@ export const productPreviewSelect = {
   price: true,
   imageUrl: true,
   rating: true,
+  categories: { select: { category: true } },
 } satisfies Prisma.ProductSelect
