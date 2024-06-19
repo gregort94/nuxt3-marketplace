@@ -16,6 +16,11 @@ export default <Partial<Config>>{
       aspectRatio: {
         square: '1 / 1',
       },
+      spacing: {
+        defaultLayoutHeaderHeight: '64px',
+        defaultLayoutTopPadding: '64px',
+        defaultLayoutContentTopOffset: '128px', // headerHeight + defaultLayoutTopPadding
+      },
     },
   },
 }

@@ -13,51 +13,91 @@ const isProductPending = computed(() =>
   cart.pendingProductsIds.has(productId.value),
 )
 
-const addToCart = () => cart.addProduct(props.product)
-
-const onReduce = () => {
-  if (productQuantity.value === 1) {
-    cart.deleteProduct(productId.value)
-  } else {
-    cart.setQuantity(productId.value, (productQuantity.value as number) - 1)
+const isPendingAdd = ref(false)
+const addToCart = async () => {
+  try {
+    isPendingAdd.value = true
+    await cart.addProduct(props.product)
+  } finally {
+    isPendingAdd.value = false
   }
 }
-const onIncrease = () =>
-  cart.setQuantity(productId.value, (productQuantity.value as number) + 1)
+
+const isPendingReduce = ref(false)
+const onReduce = async () => {
+  if (productQuantity.value === 1) {
+    try {
+      isPendingReduce.value = true
+      await cart.deleteProduct(productId.value)
+    } finally {
+      isPendingReduce.value = false
+    }
+  } else {
+    try {
+      isPendingReduce.value = true
+      await cart.setQuantity(
+        productId.value,
+        (productQuantity.value as number) - 1,
+      )
+    } finally {
+      isPendingReduce.value = false
+    }
+  }
+}
+
+const isPendingIncrease = ref(false)
+const onIncrease = async () => {
+  try {
+    isPendingIncrease.value = true
+    await cart.setQuantity(
+      productId.value,
+      (productQuantity.value as number) + 1,
+    )
+  } finally {
+    isPendingIncrease.value = false
+  }
+}
 </script>
 
 <template>
-  <VSkeleton
-    class="min-h-[32px]"
-    block-actions
-    :loading="cart.isCartFetching || isProductPending"
-  >
-    <div v-if="!productQuantity && cart.isInitialized">
-      <UButton
-        block
-        @click="addToCart"
-        >Add to cart</UButton
+  <div class="min-w-40">
+    <USkeleton
+      v-if="cart.isCartFetching"
+      class="h-8 w-full"
+    />
+    <template v-else>
+      <div v-if="!productQuantity">
+        <UButton
+          block
+          :loading="isPendingAdd"
+          @click="addToCart"
+          >Add to cart</UButton
+        >
+      </div>
+      <div
+        v-else
+        class="flex items-center space-x-2"
       >
-    </div>
-    <div
-      v-if="productQuantity"
-      class="flex items-center space-x-2"
-    >
-      <UButton
-        variant="outline"
-        :icon="
-          productQuantity === 1 ? 'i-heroicons-trash' : 'i-heroicons-minus'
-        "
-        square
-        @click="onReduce"
-      />
-      <div class="grow text-center">{{ productQuantity }}</div>
-      <UButton
-        variant="outline"
-        icon="i-heroicons-plus"
-        square
-        @click="onIncrease"
-      />
-    </div>
-  </VSkeleton>
+        <UButton
+          variant="outline"
+          :disabled="isProductPending"
+          :loading="isPendingReduce"
+          :icon="
+            productQuantity === 1 ? 'i-heroicons-trash' : 'i-heroicons-minus'
+          "
+          square
+          @click="onReduce"
+        />
+        <div class="grow text-center">{{ productQuantity }}</div>
+        <UButton
+          :disabled="isProductPending"
+          :loading="isPendingIncrease"
+          variant="outline"
+          icon="i-heroicons-plus"
+          square
+          @click="onIncrease"
+        />
+      </div>
+    </template>
+  </div>
 </template>

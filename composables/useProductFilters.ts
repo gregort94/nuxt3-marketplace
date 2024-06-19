@@ -1,19 +1,19 @@
 import type { ProductFilters, ProductSort } from '~/types/product'
 
-export default (): ProductFilters => {
+export default () => {
   const rating = useCustomRouteQuery('rating', 'number')
-  const search = useCustomRouteQuery('search', 'string')
+  const search = useCustomRouteQuery<'string'>('search', 'string')
   const sort = useCustomRouteQuery<'string', ProductSort>('sort', 'string')
   const categories = useCustomRouteQuery('categories', 'string', true)
-  const priceFrom = useCustomRouteQuery('priceFrom', 'number')
-  const priceTo = useCustomRouteQuery('priceTo', 'number')
+  const price = useCustomRouteQuery('price', 'number', true) as ComputedRef<
+    [number, number] | undefined
+  >
 
   return reactive({
     rating,
     search,
     sort,
     categories,
-    priceFrom,
-    priceTo,
-  })
+    price,
+  }) satisfies ProductFilters
 }

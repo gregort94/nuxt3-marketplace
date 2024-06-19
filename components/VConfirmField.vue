@@ -1,8 +1,11 @@
 <script lang="ts" setup generic="T">
-const props = defineProps<{ multipleFields?: boolean }>()
 const modelValue = defineModel<T>({ required: true })
 
 const tempValue = ref(modelValue.value)
+
+watch(modelValue, () => {
+  tempValue.value = modelValue.value
+})
 
 const handleChange = (value: T) => {
   tempValue.value = value
@@ -14,16 +17,15 @@ const submit = () => {
 </script>
 
 <template>
-  <form
-    class="relative"
-    @submit.prevent="submit"
-  >
+  <form @submit.prevent="submit">
     <slot
       :value="tempValue"
+      :submit="submit"
       :handle-change="handleChange"
     />
-    <div class="absolute right-0 top-0">
-      <UButton @click="submit">Apply</UButton>
-    </div>
+    <input
+      type="submit"
+      class="hidden"
+    />
   </form>
 </template>

@@ -2,6 +2,7 @@
 
 <template>
   <div>
+    <NuxtLoadingIndicator />
     <NuxtLayout>
       <NuxtPage />
       <template #fallback>

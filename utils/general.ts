@@ -18,21 +18,18 @@ export const shuffleArray = (array: any[]) => {
   return array
 }
 
-export const getRandomNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-export const pickRandomElements = <T>(
-  arr: T[],
-  minLength: number,
-  maxLength: number,
-): T[] => {
-  if (arr.length < minLength || arr.length < maxLength) {
-    throw new Error('Array length is less than the given range')
-  }
-
-  const shuffledArray = shuffleArray(arr)
-  return shuffledArray.slice(0, getRandomNumber(minLength, maxLength))
+export const getRandomNumber = (
+  min: number,
+  max: number,
+  decimalPlaces: number = 0,
+) => {
+  const multiplier = Math.pow(10, decimalPlaces)
+  const minMultiplied = min * multiplier
+  const maxMultiplied = max * multiplier
+  const randomNumber = Math.floor(
+    Math.random() * (maxMultiplied - minMultiplied + 1) + minMultiplied,
+  )
+  return randomNumber / multiplier
 }
 
 export const memoizeUnique = <T>(callback: () => T) => {
@@ -46,4 +43,17 @@ export const memoizeUnique = <T>(callback: () => T) => {
     uniqItems.add(res)
     return res
   }
+}
+
+export const pickRandomElements = <T>(
+  arr: T[],
+  minLength: number,
+  maxLength: number,
+): T[] => {
+  if (arr.length < minLength || arr.length < maxLength) {
+    throw new Error('Array length is less than the given range')
+  }
+
+  const shuffledArray = shuffleArray(arr)
+  return shuffledArray.slice(0, getRandomNumber(minLength, maxLength))
 }

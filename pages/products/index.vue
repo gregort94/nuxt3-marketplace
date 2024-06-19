@@ -6,7 +6,9 @@ useHead({ title: 'Products' })
   <div class="container">
     <div class="grid grid-cols-[200px_1fr] gap-8">
       <div>
-        <div class="sticky top-[130px]">
+        <div
+          class="sticky top-defaultLayoutContentTopOffset h-[calc(100vh_-_theme(spacing.defaultLayoutContentTopOffset))]"
+        >
           <FilterPanel />
         </div>
       </div>

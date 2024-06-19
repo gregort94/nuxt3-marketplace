@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useRouteQuery } from '@vueuse/router'
 const productFilters = useProductFilters()
 </script>
 
@@ -13,11 +12,12 @@ const productFilters = useProductFilters()
     </FilterPanelItem>
     <FilterPanelItem label="Search by name">
       <VConfirmField
-        v-slot="{ handleChange, value }"
+        v-slot="{ value, handleChange, submit }"
         v-model="productFilters.search"
       >
         <ProductSearchInput
           :model-value="value"
+          @blur="submit"
           @update:model-value="handleChange"
         />
       </VConfirmField>
@@ -28,18 +28,7 @@ const productFilters = useProductFilters()
     </FilterPanelItem>
     <UDivider />
     <FilterPanelItem label="Price">
-      <VConfirmField
-        v-slot="{ handleChange, value }"
-        :model-value="{
-          from: productFilters.priceFrom,
-          to: productFilters.priceTo,
-        }"
-      >
-        <ProductPriceRangeInput
-          :model-value="value"
-          @update:model-value="handleChange"
-        />
-      </VConfirmField>
+      <ProductPriceRangeInput v-model="productFilters.price" />
     </FilterPanelItem>
   </div>
 </template>

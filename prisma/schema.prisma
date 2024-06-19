@@ -18,7 +18,7 @@ model Category {
 model Product {
   id         String                 @id @default(uuid())
   name       String                 @unique
-  price      Int
+  price      Decimal
   rating     Decimal
   imageUrl   String
   createdAt  DateTime               @default(now())

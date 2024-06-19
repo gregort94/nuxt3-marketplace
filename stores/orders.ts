@@ -40,13 +40,13 @@ const useOrdersStore = defineStore('orders', () => {
     isInitialized.value = false
   }
 
-  watch(user, (value) => {
-    if (value) {
-      initialize()
-    } else {
-      clearOrders()
-    }
-  })
+  // watch(user, (value) => {
+  //   if (value) {
+  //     initialize()
+  //   } else {
+  //     clearOrders()
+  //   }
+  // })
 
   return {
     items,

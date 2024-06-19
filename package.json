@@ -1,11 +1,13 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "type": "module",
   "prisma": {
-    "seed": "ts-node --transpile-only --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "scripts": {
     "dev": "prisma generate && nuxt dev",
+    "dev-mobile": "prisma generate && nuxt dev --host",
     "build": "prisma generate && nuxt build",
     "lint": "eslint --ext .ts,.js,.vue .",
     "generate": "nuxt generate",

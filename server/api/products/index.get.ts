@@ -8,17 +8,7 @@ import { ProductFilters } from '~/types/product'
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  const {
-    rating,
-    skip,
-    take,
-    count,
-    search,
-    sort,
-    categories,
-    priceFrom,
-    priceTo,
-  } =
+  const { rating, skip, take, count, search, sort, categories, price } =
     getQuery<
       StringifyQuery<
         ProductFilters & { skip?: number; take?: number; count?: boolean }
@@ -43,8 +33,8 @@ export default defineEventHandler(async (event) => {
       }) ||
       undefined,
     price: {
-      gt: (priceFrom && Number(priceFrom)) || undefined,
-      lt: (priceTo && Number(priceTo)) || undefined,
+      gt: (price?.[0] && Number(price[0])) || undefined,
+      lt: (price?.[1] && Number(price[1])) || undefined,
     },
   }
 

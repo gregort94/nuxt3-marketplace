@@ -5,6 +5,6 @@ import VOverlay from '@/components/VOverlay.vue'
 
 <template>
   <VOverlay>
-    <LoadingSpinner></LoadingSpinner>
+    <LoadingSpinner />
   </VOverlay>
 </template>

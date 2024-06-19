@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
-import { memoizeUnique, pickRandomElements } from '../utils/general'
+import {
+  memoizeUnique,
+  getRandomNumber,
+  pickRandomElements,
+} from '../utils/general'
 import { MAX_PRICE } from '../constants/general'
 
 const prisma = new PrismaClient()
@@ -12,7 +16,7 @@ const generateProduct = () => {
   const category = name.split(' ')[2]
   return {
     name,
-    price: Number(faker.commerce.price({ min: 1, max: MAX_PRICE })),
+    price: getRandomNumber(100, MAX_PRICE, 2),
     rating: Number((Math.random() * 4 + 1).toFixed(1)),
     imageUrl: faker.image.urlLoremFlickr({ category }),
   }

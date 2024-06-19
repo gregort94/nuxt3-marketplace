@@ -1,8 +1,11 @@
+import { useRouteQuery } from '@vueuse/router'
+
 type TypeMap = {
   string: string
   number: number
   boolean: boolean
 }
+
 type TypeName = keyof TypeMap
 
 const TRANSFORM_BY_TYPE = {
@@ -11,23 +14,20 @@ const TRANSFORM_BY_TYPE = {
   boolean: (value) => Boolean(value),
 } satisfies { [K in TypeName]: (value: string) => any }
 
-export default <
+function useCustomRouteQuery<
   T extends TypeName,
   U extends TypeMap[T] = TypeMap[T],
-  M extends true | undefined = undefined,
->(
-  name: string,
-  type: T,
-  multiple?: M,
-) => {
-  const route = useRoute()
-  const router = useRouter()
+>(name: string, type: T): Ref<U | undefined>
 
-  const queryObj = computed(() => route.query)
+function useCustomRouteQuery<
+  T extends TypeName,
+  U extends TypeMap[T] = TypeMap[T],
+>(name: string, type: T, multiple: true): Ref<U[] | undefined>
 
-  const query = computed<M extends true ? U[] | undefined : U | undefined>({
-    get() {
-      const value = queryObj.value[name]
+function useCustomRouteQuery(name: string, type: TypeName, multiple?: boolean) {
+  const result = useRouteQuery(name, undefined, {
+    transform: (val) => {
+      const value = val as string | string[] | undefined
 
       if (value === undefined) return value
 
@@ -35,19 +35,12 @@ export default <
 
       if (multiple) {
         const values = Array.isArray(value) ? value : [value]
-        return values.map((value) => transformFunction(value as string))
+        return values.map((value) => transformFunction(value))
       }
 
       return transformFunction(value as string)
     },
-    set(value) {
-      navigateTo({
-        query: {
-          ...queryObj.value,
-          [name]: value,
-        },
-      })
-    },
   })
-  return query
+  return result
 }
+export default useCustomRouteQuery

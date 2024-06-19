@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import { UseImage } from '@vueuse/components'
 import type { Product } from '~/types/product'
 
 const route = useRoute()
 const { id } = route.params
 
-const { data: product, pending } = await useLazyFetch<Product>(
+const { data: product, pending } = await useFetchOnce<Product>(
   `/api/products/${id}`,
 )
 </script>
@@ -14,34 +15,24 @@ const { data: product, pending } = await useLazyFetch<Product>(
     <div class="grid grid-cols-2 gap-4">
       <div>
         <div class="aspect-square w-full overflow-hidden rounded-md">
-          <VSkeletonImage
-            :loading="pending"
-            :src="product?.imageUrl"
+          <UseImage
+            :src="product.imageUrl"
             class="size-full object-cover"
           />
         </div>
       </div>
       <div class="flex flex-col items-start space-y-1">
-        <VSkeleton
+        <div
           class="text-3xl font-semibold text-gray-900"
           :loading="pending"
-          >{{ product?.name }}</VSkeleton
         >
-        <VSkeleton
-          class="text-3xl text-gray-900"
-          :loading="pending"
-          >{{ product?.price }}$</VSkeleton
-        >
-        <VSkeleton :loading="pending">
-          <RatingValue
-            v-if="product"
-            :value="Number(product.rating)"
-          />
-        </VSkeleton>
-        <ProductCartManager
-          v-if="product"
-          :product="product"
-        />
+          {{ product.name }}
+        </div>
+        <div class="text-3xl text-gray-900">{{ product.price }}$</div>
+        <div>
+          <RatingValue :value="Number(product.rating)" />
+        </div>
+        <ProductCartManager :product="product" />
       </div>
     </div>
   </div>

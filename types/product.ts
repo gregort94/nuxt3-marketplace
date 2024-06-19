@@ -25,6 +25,5 @@ export type ProductFilters = {
   search?: string
   sort?: ProductSort
   categories?: string[]
-  priceFrom?: number
-  priceTo?: number
+  price?: number[]
 }

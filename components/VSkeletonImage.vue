@@ -35,8 +35,7 @@ watch(
     v-show="isLoading"
     :loading="true"
     :class="$attrs['class']"
-  >
-  </VSkeleton>
+  />
   <img
     v-show="!isLoading"
     :src="src"

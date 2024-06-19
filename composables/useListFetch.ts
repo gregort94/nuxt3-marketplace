@@ -1,6 +1,6 @@
 export default <T>(
   url: string,
-  filters?: Record<string, MaybeArray<string | number> | undefined | boolean>,
+  filters: Record<string, MaybeArray<string | number> | undefined | boolean>,
   itemsPerPage: number = 20,
 ) => {
   type ApiResponse = { list: T[]; total?: number }
@@ -12,10 +12,18 @@ export default <T>(
   const itemsRemain = computed(
     () => list.value && total.value && total.value - list.value.length,
   )
+  const itemsLength = computed(() => list.value?.length)
+  const isNoItems = computed(() => list.value && !list.value.length)
 
   const isLoading = ref(false)
+  let abortController = new AbortController()
   const fetchList = async () => {
+    if (isLoading) {
+      abortController.abort()
+      abortController = new AbortController()
+    }
     isLoading.value = true
+
     try {
       const response = await $fetch<ApiResponse>(url, {
         query: {
@@ -23,20 +31,26 @@ export default <T>(
           count: true,
           take: itemsPerPage,
         },
+        signal: abortController.signal,
       })
       list.value = response.list
       total.value = response.total
-    } finally {
+
       isLoading.value = false
+    } catch (err) {
+      if (err.cause.name === 'AbortError') {
+        console.log('Fetch aborted')
+      } else {
+        isLoading.value = false
+        throw err
+      }
     }
   }
 
   fetchList()
 
-  if (filters && isReactive(filters)) {
-    watch(filters, () => {
-      fetchList()
-    })
+  if (isReactive(filters)) {
+    watch(filters, fetchList)
   }
   const isAdding = ref(false)
   const addItems = async () => {
@@ -66,5 +80,7 @@ export default <T>(
     total,
     isTotalReached,
     itemsRemain,
+    isNoItems,
+    itemsLength,
   }
 }
