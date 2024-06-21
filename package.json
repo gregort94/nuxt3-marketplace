@@ -47,5 +47,8 @@
     "@vueuse/router": "^10.9.0",
     "pinia": "^2.1.7",
     "vee-validate": "^4.11.1"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
