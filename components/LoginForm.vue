@@ -13,13 +13,16 @@ const logIn = async (values) => {
     notifier.warn(error.message)
   } else {
     notifier.success('Successfully logged in!')
-    router.push('/')
+    navigateTo({ path: router.options.history.state.back as string })
   }
 }
 
 const github = async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'github',
+    options: {
+      redirectTo: `${window.location.origin}${router.options.history.state.back}`,
+    },
   })
 
   if (error) {
@@ -36,7 +39,6 @@ const github = async () => {
     >
       <VeeField
         v-slot="{ value, handleChange, errorMessage, meta }"
-        :model-value="'gregort94@gmail.com'"
         name="email"
         rules="required|email"
       >
@@ -54,7 +56,6 @@ const github = async () => {
         v-slot="{ value, handleChange, meta, errorMessage }"
         name="password"
         rules="required"
-        :model-value="'g3i8g4'"
       >
         <UFormGroup
           :error="meta.touched && errorMessage"
@@ -70,8 +71,9 @@ const github = async () => {
         class="w-full"
         type="submit"
         block
-        >Log In</UButton
       >
+        Log In
+      </UButton>
     </VeeForm>
     <UDivider label="OR" />
     <UButton

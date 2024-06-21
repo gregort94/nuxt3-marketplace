@@ -6,22 +6,11 @@ const user = useSupabaseUser()
   <header>
     <div class="container">
       <div
-        class="flex h-defaultLayoutHeaderHeight items-center justify-center border-b border-gray-200"
+        class="flex h-defaultLayoutHeaderHeight items-center justify-between border-b border-gray-200"
       >
-        <!-- Logo -->
-        <div class="ml-4 flex lg:ml-0">
-          <NuxtLink to="/">
-            <span class="sr-only">Your Company</span>
-            <img
-              class="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            />
-          </NuxtLink>
-        </div>
-
-        <div class="flex h-full grow justify-center">
-          <AppHeaderPageLink path="/"> Home </AppHeaderPageLink>
-          <AppHeaderPageLink path="/products"> Products </AppHeaderPageLink>
+        <div class="flex h-full justify-center">
+          <AppHeaderPageLink path="/">Home</AppHeaderPageLink>
+          <AppHeaderPageLink path="/products">Products</AppHeaderPageLink>
         </div>
         <div class="ml-auto flex h-full items-center">
           <ClientOnly>
@@ -30,17 +19,16 @@ const user = useSupabaseUser()
               v-else
               class="flex h-full items-center"
             >
-              <AppHeaderPageLink path="/login"> Log In </AppHeaderPageLink>
+              <AppHeaderPageLink path="/login">Log In</AppHeaderPageLink>
               <span
                 class="h-6 w-px bg-gray-200"
                 aria-hidden="true"
               />
-              <AppHeaderPageLink path="/signUp"> Sign Up </AppHeaderPageLink>
+              <AppHeaderPageLink path="/signUp">Sign Up</AppHeaderPageLink>
             </div>
           </ClientOnly>
 
-          <!-- Cart -->
-          <div class="ml-4 flex">
+          <div class="flex">
             <NavigationButtonOrders />
             <NavigationButtonCart />
           </div>

@@ -1,17 +1,11 @@
-<script lang="ts" setup>
-const { data } = await useCategories()
-const fo = ref()
-setTimeout(() => {
-  fo.value = 2
-}, 2000)
-</script>
+<script lang="ts" setup></script>
 
 <template>
-  <div class="h-[200px] bg-white">
-    {{ data }}
-
-    <VSkeleton>
-      <span v-if="fo">asds</span>
-    </VSkeleton>
+  <div class="container">
+    <div class="flex justify-center">
+      <NuxtLink to="/products">
+        <UButton variant="link">Go shopping</UButton>
+      </NuxtLink>
+    </div>
   </div>
 </template>

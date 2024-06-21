@@ -6,7 +6,10 @@ const cart = useCart()
   <div class="container">
     <div class="grid gap-10 lg:grid-cols-[1fr_400px]">
       <CartItems />
-      <CartSummary />
+
+      <div>
+        <CartSummary class="sticky top-defaultLayoutContentTopOffset" />
+      </div>
     </div>
   </div>
 </template>

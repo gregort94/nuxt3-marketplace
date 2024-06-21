@@ -27,7 +27,7 @@ const useOrdersStore = defineStore('orders', () => {
         body: orderToCreate,
       })
       items.value.push(newOrder)
-      await cart.clearCart()
+      await cart.deleteCart()
       navigateTo('/orders')
       notifier.success('Order created')
     } catch (err: any) {
@@ -40,13 +40,15 @@ const useOrdersStore = defineStore('orders', () => {
     isInitialized.value = false
   }
 
-  // watch(user, (value) => {
-  //   if (value) {
-  //     initialize()
-  //   } else {
-  //     clearOrders()
-  //   }
-  // })
+  watch(user, (value, oldValue) => {
+    if (!oldValue && value) {
+      setTimeout(() => {
+        initialize() // Hotfix for supabase authentication
+      }, 0)
+    } else if (oldValue && !value) {
+      clearOrders()
+    }
+  })
 
   return {
     items,

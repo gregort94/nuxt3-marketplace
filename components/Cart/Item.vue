@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { CartItemWithProduct } from '~/types/cart'
+import type { CartItem } from '~/types/cartItem'
 
 const props = defineProps<{
-  cartItem: CartItemWithProduct
+  cartItem: PartialFields<CartItem, 'id'>
   editable?: boolean
 }>()
 </script>

@@ -5,25 +5,24 @@ const cart = useCart()
 <template>
   <div>
     <div class="flex flex-col gap-4">
-      <div
-        v-for="item in cart.items"
-        :key="item.product.id"
-      >
-        <VSkeleton :loading="cart.isCartFetching">
-          <CartItem
-            editable
-            :cart-item="item"
-          />
-        </VSkeleton>
-      </div>
-
-      <template v-if="!Object.keys(cart.items).length && cart.isCartFetching">
-        <VSkeleton
+      <template v-if="cart.isCartFetching">
+        <USkeleton
           v-for="item in 3"
           :key="item"
           :loading="true"
           class="h-12"
         />
+      </template>
+      <template v-else>
+        <div
+          v-for="item in cart.items"
+          :key="item.product.id"
+        >
+          <CartItem
+            editable
+            :cart-item="item"
+          />
+        </div>
       </template>
     </div>
     <div v-if="cart.isInitialized && !Object.keys(cart.items).length">

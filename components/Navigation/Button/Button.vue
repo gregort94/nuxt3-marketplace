@@ -3,6 +3,7 @@ const props = defineProps<{
   iconName: string
   text: string
   badgeText?: number | string
+  active?: boolean
 }>()
 </script>
 
@@ -10,7 +11,7 @@ const props = defineProps<{
   <UButton
     variant="link"
     :icon="iconName"
-    color="gray"
+    :color="active ? 'primary' : 'gray'"
     >{{ text }}</UButton
   >
 </template>

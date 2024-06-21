@@ -96,8 +96,8 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
-  const clearCart = async () => {
-    if (!user.value) return (items.value = {})
+  const deleteCart = async () => {
+    if (!user.value) return clearCart()
 
     try {
       await $fetch('/api/user/cart', { method: 'DELETE' })
@@ -107,13 +107,19 @@ const useCartStore = defineStore('cart', () => {
     }
   }
 
-  // watch(user, (value, oldValue) => {
-  //   if (!oldValue && value) {
-  //     initialize()
-  //   } else {
-  //     clearCart()
-  //   }
-  // })
+  const clearCart = () => {
+    items.value = {}
+  }
+
+  watch(user, (value, oldValue) => {
+    if (!oldValue && value) {
+      setTimeout(() => {
+        initialize()
+      }, 0) // Hotfix for supabase authentication
+    } else if (oldValue && !value) {
+      clearCart()
+    }
+  })
 
   return {
     initialize,
@@ -125,7 +131,7 @@ const useCartStore = defineStore('cart', () => {
     summary,
     pendingProductsIds,
     addProduct,
-    clearCart,
+    deleteCart,
   }
 })
 

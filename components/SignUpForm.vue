@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 const supabase = useSupabaseClient()
 const toast = useToast()
-const router = useRouter()
 
 const signUp = async (values) => {
   const { error } = await supabase.auth.signUp({
@@ -13,7 +12,7 @@ const signUp = async (values) => {
     toast.add({ title: error.message, color: 'red' })
   } else {
     toast.add({ title: 'Successfully logged in!' })
-    router.push('/')
+    navigateTo({ path: '/' })
   }
 }
 </script>

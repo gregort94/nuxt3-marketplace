@@ -16,7 +16,7 @@ const generateProduct = () => {
   const category = name.split(' ')[2]
   return {
     name,
-    price: getRandomNumber(100, MAX_PRICE, 2),
+    price: getRandomNumber(100, MAX_PRICE),
     rating: Number((Math.random() * 4 + 1).toFixed(1)),
     imageUrl: faker.image.urlLoremFlickr({ category }),
   }

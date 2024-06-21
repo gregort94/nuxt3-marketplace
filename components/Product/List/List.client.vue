@@ -48,23 +48,13 @@ const loadingItemsAmount = computed(() =>
             />
           </div>
         </NuxtLink>
-        <RatingValue :value="Number(product.rating)" />
-        <div>
-          <div
-            v-for="{ category } in product.categories"
-            :key="category.id"
-          >
-            {{ category.name }}
-          </div>
-        </div>
-        <h3 class="mt-4 line-clamp-1 font-medium text-gray-900">
+        <h3 class="mt-2 line-clamp-1 font-medium text-gray-900">
           {{ product.name }}
         </h3>
-        <p class="mt-2 font-medium text-gray-900">{{ product.price }}</p>
-        <ProductCartManager
-          :product="product"
-          @click.stop
-        />
+        <div class="flex items-center justify-between">
+          <p class="font-bold text-gray-900">{{ product.price }}$</p>
+          <RatingValue :value="Number(product.rating)" />
+        </div>
       </div>
       <template v-if="isAdding || (isLoading && !list)">
         <USkeleton

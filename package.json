@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
-    "@heroicons/vue": "^2.1.1",
     "@nuxt/devtools": "^1.0.8",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/supabase": "^1.1.7",
@@ -32,9 +31,11 @@
     "nuxt-headlessui": "^1.1.5",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.4.1",
-    "prisma": "^5.11.0"
+    "prisma": "^5.11.0",
+    "@typescript-eslint/parser": "^7.13.1"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.1.1",
     "@nuxt/ui": "^2.14.2",
     "@pinia/nuxt": "^0.5.1",
     "@vee-validate/i18n": "^4.12.6",
