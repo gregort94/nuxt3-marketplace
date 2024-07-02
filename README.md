@@ -1,63 +1,44 @@
-# Nuxt 3 Minimal Starter
+# Nuxt3-marketplace
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> Stack: Nuxt 3, Vue 3, TaiwinCSS, Prisma, Nuxt UI, VeeValidate, VueUse
 
-## Setup
+[Demo](https://prismatic-cuchufli-173864.netlify.app/)
 
-Make sure to install the dependencies:
+## Project description
 
-```bash
-# npm
+### **Features**
+
+Nuxt3-marketplace is Full Stack application simulating an online store where the following features are implemented:
+
+- Authorisation
+- Products filtering
+- Adding to cart
+- Order creation
+
+## Project setup
+
+### **Environment**
+
+The following requirements must be met in order to deploy the project:
+
+- Node version >= 20.0.0
+
+### **Scaffolding**
+
+Install dependencies
+
+```
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
 ```
 
-## Development Server
+Compiles and hot-reloads for development
 
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+```
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
 ```
 
-## Production
+Compiles and minifies for production
 
-Build the application for production:
-
-```bash
-# npm
+```
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
