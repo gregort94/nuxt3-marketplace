@@ -41,6 +41,6 @@ onUnmounted(() => {
 
 <template>
   <div ref="containerEl">
-    <slot></slot>
+    <slot />
   </div>
 </template>

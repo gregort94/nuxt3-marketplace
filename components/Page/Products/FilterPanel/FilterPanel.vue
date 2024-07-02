@@ -4,13 +4,13 @@ const productFilters = useProductFilters()
 
 <template>
   <div class="space-y-4">
-    <FilterPanelItem label="Categories">
+    <PageProductsFilterPanelItem label="Categories">
       <ProductCategoriesPicker v-model="productFilters.categories" />
-    </FilterPanelItem>
-    <FilterPanelItem label="Sort">
+    </PageProductsFilterPanelItem>
+    <PageProductsFilterPanelItem label="Sort">
       <ProductSortSelect v-model="productFilters.sort" />
-    </FilterPanelItem>
-    <FilterPanelItem label="Search by name">
+    </PageProductsFilterPanelItem>
+    <PageProductsFilterPanelItem label="Search by name">
       <VConfirmField
         v-slot="{ value, handleChange, submit }"
         v-model="productFilters.search"
@@ -21,14 +21,14 @@ const productFilters = useProductFilters()
           @update:model-value="handleChange"
         />
       </VConfirmField>
-    </FilterPanelItem>
+    </PageProductsFilterPanelItem>
     <UDivider />
-    <FilterPanelItem label="Rating">
+    <PageProductsFilterPanelItem label="Rating">
       <ProductRatingSelect v-model="productFilters.rating" />
-    </FilterPanelItem>
+    </PageProductsFilterPanelItem>
     <UDivider />
-    <FilterPanelItem label="Price">
+    <PageProductsFilterPanelItem label="Price">
       <ProductPriceRangeInput v-model="productFilters.price" />
-    </FilterPanelItem>
+    </PageProductsFilterPanelItem>
   </div>
 </template>

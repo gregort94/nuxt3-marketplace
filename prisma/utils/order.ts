@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { productPreviewSelect } from '~/prisma/utils/product'
 
 export const orderSelect = {

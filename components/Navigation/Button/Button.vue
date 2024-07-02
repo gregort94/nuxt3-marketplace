@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps<{
+defineProps<{
   iconName: string
   text: string
   badgeText?: number | string

@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import { UseImage } from '@vueuse/components'
 import type { CartItem } from '~/types/cartItem'
 
-const props = defineProps<{
+defineProps<{
   cartItem: PartialFields<CartItem, 'id'>
   editable?: boolean
 }>()
@@ -9,9 +10,9 @@ const props = defineProps<{
 
 <template>
   <div class="flex space-x-4">
-    <div class="aspect-square w-24 overflow-hidden rounded-lg">
+    <div class="size-24 overflow-hidden rounded-lg">
       <NuxtLink :to="`/products/${cartItem.product.id}`">
-        <VSkeletonImage
+        <UseImage
           class="size-full object-cover"
           :src="cartItem.product.imageUrl"
         />
@@ -30,4 +31,3 @@ const props = defineProps<{
     </div>
   </div>
 </template>
-~/types/cartItem

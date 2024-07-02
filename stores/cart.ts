@@ -12,6 +12,8 @@ const useCartStore = defineStore('cart', () => {
     { deep: true },
   )
 
+  const isEmpty = computed(() => Object.keys(items.value).length === 0)
+
   const summary = computed(() =>
     Object.values(items.value).reduce(
       (acc, cur) => {
@@ -56,8 +58,8 @@ const useCartStore = defineStore('cart', () => {
         body: { quantity: 1 },
       })
       items.value[product.id] = cartItem
-    } catch (err: any) {
-      notifier.warn(err.message)
+    } catch (err) {
+      if (err instanceof Error) notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }
@@ -73,24 +75,25 @@ const useCartStore = defineStore('cart', () => {
         body: { quantity },
       })
       items.value[productId].quantity = quantity
-    } catch (err: any) {
-      notifier.warn(err.message)
+    } catch (err) {
+      if (err instanceof Error) notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }
   }
 
   const deleteProduct = async (productId: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     if (!user.value) return delete items.value[productId]
-
     try {
       pendingProductsIds.value.add(productId)
       await $fetch(`/api/products/${productId}/cart`, {
         method: 'DELETE',
       })
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete items.value[productId]
-    } catch (err: any) {
-      notifier.warn(err.message)
+    } catch (err) {
+      if (err instanceof Error) notifier.warn(err.message)
     } finally {
       pendingProductsIds.value.delete(productId)
     }
@@ -99,12 +102,8 @@ const useCartStore = defineStore('cart', () => {
   const deleteCart = async () => {
     if (!user.value) return clearCart()
 
-    try {
-      await $fetch('/api/user/cart', { method: 'DELETE' })
-      items.value = {}
-    } catch (err: any) {
-      notifier.warn(err.message)
-    }
+    await $fetch('/api/user/cart', { method: 'DELETE' })
+    items.value = {}
   }
 
   const clearCart = () => {
@@ -128,6 +127,7 @@ const useCartStore = defineStore('cart', () => {
     deleteProduct,
     isInitialized,
     isCartFetching,
+    isEmpty,
     summary,
     pendingProductsIds,
     addProduct,
@@ -137,7 +137,11 @@ const useCartStore = defineStore('cart', () => {
 
 export const useCart = () => {
   const cartStore = useCartStore()
-  if (!cartStore.isInitialized && !cartStore.isCartFetching && process.client) {
+  if (
+    !cartStore.isInitialized &&
+    !cartStore.isCartFetching &&
+    import.meta.client
+  ) {
     cartStore.initialize()
   }
   return cartStore

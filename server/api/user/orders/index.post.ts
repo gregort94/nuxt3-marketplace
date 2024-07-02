@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { orderSelect } from '~/prisma/utils/order'
-import { OrderToCreate } from '~/types/order'
+import type { OrderToCreate } from '~/types/order'
 
 const prisma = new PrismaClient()
 

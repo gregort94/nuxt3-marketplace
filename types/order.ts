@@ -1,4 +1,4 @@
-import type { Order, OrderItem, Product, Prisma } from '@prisma/client'
+import type { Order, OrderItem, Prisma } from '@prisma/client'
 import type { SerializeObject } from 'nitropack'
 
 import type { orderSelect } from '~/prisma/utils/order'

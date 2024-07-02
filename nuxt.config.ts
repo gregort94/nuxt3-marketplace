@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
+    '@nuxt/eslint',
   ],
   supabase: {
     redirect: false,

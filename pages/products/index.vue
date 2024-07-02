@@ -9,10 +9,10 @@ useHead({ title: 'Products' })
         <div
           class="sticky top-defaultLayoutContentTopOffset h-[calc(100vh_-_theme(spacing.defaultLayoutContentTopOffset))]"
         >
-          <FilterPanel />
+          <PageProductsFilterPanel />
         </div>
       </div>
-      <ProductList />
+      <PageProductsList />
     </div>
   </div>
 </template>

@@ -1,9 +1,10 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 import { DEFAULT_PRODUCT_SORT } from '~/constants/sorts'
 import { productPreviewSelect } from '~/prisma/utils/product'
-import { StringifyQuery } from '~/server/types'
+import type { StringifyQuery } from '~/server/types'
 import { getSortByString } from '~/server/utils/getSortByString'
-import { ProductFilters } from '~/types/product'
+import type { ProductFilters } from '~/types/product'
 
 const prisma = new PrismaClient()
 
@@ -18,7 +19,7 @@ export default defineEventHandler(async (event) => {
   const order = getSortByString(sort || DEFAULT_PRODUCT_SORT)
 
   const where: Prisma.ProductWhereInput = {
-    rating: { gt: rating && Number(rating) - 1 },
+    rating: { gte: rating && Number(rating) },
     name: {
       contains: search && search.trim().toLowerCase(),
       mode: 'insensitive',

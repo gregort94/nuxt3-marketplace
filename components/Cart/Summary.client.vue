@@ -12,7 +12,7 @@ const user = useSupabaseUser()
       </div>
       <template v-if="user">
         <OrderCreateForm
-          v-if="cart.isInitialized && Object.keys(cart.items).length"
+          v-if="cart.isInitialized && !cart.isEmpty"
           class="mt-4 pt-4"
         />
       </template>

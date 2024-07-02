@@ -5,6 +5,6 @@
     class="absolute inset-0 !m-0 flex cursor-default items-center justify-center bg-white/40"
     @click.stop
   >
-    <slot></slot>
+    <slot />
   </div>
 </template>

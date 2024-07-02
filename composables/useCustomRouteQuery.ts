@@ -9,7 +9,7 @@ const TRANSFORM_BY_TYPE = {
   string: (value) => value,
   number: (value) => Number(value),
   boolean: (value) => Boolean(value),
-} satisfies { [K in TypeName]: (value: string) => any }
+} satisfies { [K in TypeName]: (value: string) => unknown }
 
 export default <
   T extends TypeName,
@@ -21,7 +21,6 @@ export default <
   multiple?: M,
 ) => {
   const route = useRoute()
-  const router = useRouter()
 
   const queryObj = computed(() => route.query)
 

@@ -1,7 +1,14 @@
 <script lang="ts" setup>
+import type { Category } from '@prisma/client'
+
 const modelValue = defineModel<string[]>({ default: () => [] })
 
-const { data: categories, pending } = await useCategories()
+const { data: categories, pending } = await useFetchOnce<Category[]>(
+  '/api/categories',
+  {
+    lazy: true,
+  },
+)
 </script>
 
 <template>
@@ -10,10 +17,10 @@ const { data: categories, pending } = await useCategories()
       v-if="pending"
       class="space-y-2"
     >
-      <VSkeleton
+      <USkeleton
         v-for="item in 3"
         :key="item"
-        loading
+        class="h-3"
       />
     </div>
     <div v-if="categories">

@@ -1,7 +1,7 @@
 <script lang="ts" setup generic="T">
 const modelValue = defineModel<T>({ required: true })
 
-const tempValue = ref(modelValue.value)
+const tempValue = ref(modelValue.value) as Ref<T>
 
 watch(modelValue, () => {
   tempValue.value = modelValue.value

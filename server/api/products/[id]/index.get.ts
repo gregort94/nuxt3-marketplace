@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { productSelect } from '~/prisma/utils/product'
 
 const prisma = new PrismaClient()
 
@@ -8,6 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const product = await prisma.product.findUnique({
     where: { id },
+    select: productSelect,
   })
 
   if (!product) {

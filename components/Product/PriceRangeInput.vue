@@ -5,7 +5,7 @@ const modelValue = defineModel<[number, number]>()
 </script>
 
 <template>
-  <RangePicker
+  <VRangePicker
     v-model="modelValue"
     :min="0"
     :max="MAX_PRICE"

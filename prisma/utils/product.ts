@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import type { Prisma } from '@prisma/client'
 
 export const productSelect = {
   id: true,
@@ -16,5 +16,4 @@ export const productPreviewSelect = {
   price: true,
   imageUrl: true,
   rating: true,
-  categories: { select: { category: true } },
 } satisfies Prisma.ProductSelect

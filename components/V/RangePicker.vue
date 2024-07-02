@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps<{ min: number; max: number }>()
+defineProps<{ min: number; max: number }>()
 
 const modelValue = defineModel<[number, number]>({
   default: ({ min, max }: { min: number; max: number }) => [min, max],

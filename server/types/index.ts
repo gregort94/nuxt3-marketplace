@@ -1,6 +1,6 @@
 type Stringify<T> = T extends undefined
   ? undefined
-  : T extends Array<any>
+  : T extends Array<unknown>
     ? string[] | string
     : string
 

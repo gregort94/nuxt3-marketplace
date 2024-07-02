@@ -3,7 +3,7 @@ const supabase = useSupabaseClient()
 const notifier = useNotifier()
 const router = useRouter()
 
-const logIn = async (values) => {
+const logIn = async (values: { email: string; password: string }) => {
   const { error } = await supabase.auth.signInWithPassword({
     email: values.email,
     password: values.password,

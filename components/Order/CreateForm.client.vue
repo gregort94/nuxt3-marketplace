@@ -1,24 +1,28 @@
 <script lang="ts" setup>
-import type { Order, Prisma } from '@prisma/client'
+import type { Order } from '@prisma/client'
 
 const cart = useCart()
 const notifier = useNotifier()
 const orders = useOrders()
-const user = useSupabaseUser()
 
 const isPending = ref(false)
 
 const onSubmit = async (formFields: ModelToCreate<Order>) => {
   isPending.value = true
-  await orders.createOrder({
-    ...formFields,
-    items: Object.values(cart.items).map((item) => ({
-      productId: item.product.id,
-      price: item.product.price,
-      quantity: item.quantity,
-    })),
-  })
-  isPending.value = false
+  try {
+    await orders.createOrder({
+      ...formFields,
+      items: Object.values(cart.items).map((item) => ({
+        productId: item.product.id,
+        price: item.product.price,
+        quantity: item.quantity,
+      })),
+    })
+    navigateTo('/orders')
+    notifier.success('Order created')
+  } finally {
+    isPending.value = false
+  }
 }
 </script>
 
@@ -47,7 +51,7 @@ const onSubmit = async (formFields: ModelToCreate<Order>) => {
         name="paymentMethod"
       >
         <UFormGroup label="Payment Method">
-          <FormRadioPaymentMethod
+          <PaymentMethodSelect
             :model-value="value"
             @update:model-value="handleChange"
           />

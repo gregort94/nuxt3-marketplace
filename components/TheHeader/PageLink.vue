@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-const props = defineProps<{ path: string }>()
+defineProps<{ path: string }>()
 const route = useRoute()
 </script>
 
 <template>
   <NuxtLink
-    :key="path"
     :to="path"
     :class="[
       route.path === path

@@ -13,13 +13,13 @@ const cart = useCart()
         <NavigationButton
           icon-name="i-heroicons-shopping-bag"
           text="Cart"
-        ></NavigationButton>
+        />
       </UChip>
       <template #fallback>
         <NavigationButton
           icon-name="i-heroicons-shopping-bag"
           text="Cart"
-        ></NavigationButton>
+        />
       </template>
     </ClientOnly>
   </NuxtLink>

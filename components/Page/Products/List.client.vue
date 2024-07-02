@@ -7,16 +7,8 @@ const resetFilters = () => {
 }
 const filters = useProductFilters()
 const ITEMS_PER_PAGE = 20
-const {
-  list,
-  isLoading,
-  addItems,
-  isAdding,
-  itemsRemain,
-  isNoItems,
-  total,
-  itemsLength,
-} = useListFetch<ProductPreview>('/api/products', filters, ITEMS_PER_PAGE)
+const { list, isLoading, addItems, isAdding, itemsRemain, isNoItems } =
+  useListFetch<ProductPreview>('/api/products', filters, ITEMS_PER_PAGE)
 
 watch(filters, () => {
   window.scrollTo(0, 0)
@@ -30,13 +22,14 @@ const loadingItemsAmount = computed(() =>
 </script>
 
 <template>
-  <InfiniteScrollContainer @trigger="addItems">
+  <VInfiniteScrollContainer @trigger="addItems">
     <div
       class="relative grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8"
     >
       <div
         v-for="product in list"
         :key="product.id"
+        class="space-y-1"
       >
         <NuxtLink :to="`/products/${product.id}`">
           <div
@@ -48,13 +41,17 @@ const loadingItemsAmount = computed(() =>
             />
           </div>
         </NuxtLink>
-        <h3 class="mt-2 line-clamp-1 font-medium text-gray-900">
+        <h3 class="mt-2 line-clamp-1 font-bold font-medium">
           {{ product.name }}
         </h3>
         <div class="flex items-center justify-between">
-          <p class="font-bold text-gray-900">{{ product.price }}$</p>
+          <p class="text-gray-900">{{ product.price }}$</p>
           <RatingValue :value="Number(product.rating)" />
         </div>
+        <ProductCartManager
+          :product="product"
+          @click.stop
+        />
       </div>
       <template v-if="isAdding || (isLoading && !list)">
         <USkeleton
@@ -63,7 +60,6 @@ const loadingItemsAmount = computed(() =>
           class="aspect-square"
         />
       </template>
-
       <VOverlayLoading v-if="isLoading && list" />
       <div
         v-if="isNoItems"
@@ -73,5 +69,5 @@ const loadingItemsAmount = computed(() =>
         <UButton @click="resetFilters">Reset Filters</UButton>
       </div>
     </div>
-  </InfiniteScrollContainer>
+  </VInfiniteScrollContainer>
 </template>

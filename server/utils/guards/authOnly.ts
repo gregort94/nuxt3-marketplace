@@ -1,4 +1,4 @@
-import { H3Event } from 'h3'
+import type { H3Event } from 'h3'
 export default (event: H3Event) => {
   if (!event.context.user) {
     throw createError({
@@ -7,3 +7,4 @@ export default (event: H3Event) => {
     })
   }
 }
+1
