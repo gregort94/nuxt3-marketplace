@@ -23,13 +23,10 @@ const { data: product, pending } = await useFetchOnce<Product>(
       </div>
       <div class="flex flex-col justify-between">
         <div class="flex flex-col items-start space-y-1">
-          <div
-            class="text-3xl font-semibold text-gray-900"
-            :loading="pending"
-          >
+          <div class="text-3xl font-semibold">
             {{ product.name }}
           </div>
-          <div class="text-3xl text-gray-900">{{ product.price }}$</div>
+          <div class="text-3xl">{{ product.price }}$</div>
           <div>
             <RatingValue :value="Number(product.rating)" />
           </div>
@@ -42,7 +39,7 @@ const { data: product, pending } = await useFetchOnce<Product>(
             <li
               v-for="category in product.categories"
               :key="category.category.id"
-              class="rounded-md bg-gray-200 px-2 py-1"
+              class="rounded-md bg-gray-200 px-2 py-1 dark:bg-gray-700"
             >
               {{ category.category.name }}
             </li>
