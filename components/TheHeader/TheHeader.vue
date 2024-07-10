@@ -6,30 +6,31 @@ const user = useSupabaseUser()
   <header>
     <div class="container">
       <div
-        class="flex h-defaultLayoutHeaderHeight items-center justify-between border-b border-gray-200"
+        class="flex h-defaultLayoutHeaderHeight items-center justify-between border-b dark:border-gray-800"
       >
-        <div class="flex h-full justify-center">
+        <div class="flex justify-center">
           <TheHeaderPageLink path="/">Home</TheHeaderPageLink>
           <TheHeaderPageLink path="/products">Products</TheHeaderPageLink>
         </div>
-        <div class="ml-auto flex h-full items-center">
+        <div class="ml-auto flex items-center">
           <ClientOnly>
             <UserPreview v-if="user" />
             <div
               v-else
-              class="flex h-full items-center"
+              class="flex"
             >
               <TheHeaderPageLink path="/login">Log In</TheHeaderPageLink>
-              <span
-                class="h-6 w-px bg-gray-200"
-                aria-hidden="true"
-              />
+              <UDivider orientation="vertical" />
               <TheHeaderPageLink path="/signUp">Sign Up</TheHeaderPageLink>
             </div>
           </ClientOnly>
-          <div class="flex">
+          <div class="flex items-center">
             <NavigationButtonOrders />
             <NavigationButtonCart />
+          </div>
+          <div class="ml-2 flex">
+            <DarkModeToggle />
+            <ThemeSwitcher />
           </div>
         </div>
       </div>

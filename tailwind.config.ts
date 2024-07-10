@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { COLORS } from './constants/themeColors'
 
 export default <Partial<Config>>{
   theme: {
@@ -23,4 +24,5 @@ export default <Partial<Config>>{
       },
     },
   },
+  safelist: [...COLORS.map((color) => `bg-${color}-500`)],
 }

@@ -5,11 +5,7 @@ definePageMeta({ middleware: 'guard-guest-only' })
 <template>
   <div class="container">
     <div class="mx-auto w-[400px]">
-      <div
-        class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
-      >
-        Log In
-      </div>
+      <div class="text-center text-2xl font-bold">Log In</div>
       <LoginForm />
       <div>
         Don't have an account?

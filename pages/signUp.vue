@@ -5,11 +5,7 @@ definePageMeta({ middleware: 'guard-guest-only' })
 <template>
   <div class="container">
     <div class="mx-auto w-[400px]">
-      <div
-        class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
-      >
-        Sign Up
-      </div>
+      <div class="text-center text-2xl font-bold">Sign Up</div>
       <SignUpForm>
         <NuxtLink to="/signUp">Sign Up</NuxtLink>
       </SignUpForm>

@@ -41,11 +41,11 @@ const loadingItemsAmount = computed(() =>
             />
           </div>
         </NuxtLink>
-        <h3 class="mt-2 line-clamp-1 font-bold font-medium">
+        <h3 class="mt-2 line-clamp-1 font-bold leading-none">
           {{ product.name }}
         </h3>
         <div class="flex items-center justify-between">
-          <p class="text-gray-900">{{ product.price }}$</p>
+          <p class="leading-none">{{ product.price }}$</p>
           <RatingValue :value="Number(product.rating)" />
         </div>
         <ProductCartManager

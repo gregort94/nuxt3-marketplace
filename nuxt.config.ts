@@ -25,9 +25,6 @@ export default defineNuxtConfig({
       ErrorMessage: 'VeeErrorMessage',
     },
   },
-  colorMode: {
-    preference: 'light',
-  },
   build: { transpile: ['@vee-validate/rules'] },
   tailwindcss: {
     viewer: false,
