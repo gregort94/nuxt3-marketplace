@@ -3,28 +3,26 @@ const cart = useCart()
 </script>
 
 <template>
-  <NuxtLink to="/cart">
-    <ClientOnly>
-      <UChip
-        :text="cart.summary.quantity"
-        :show="cart.isInitialized && !!cart.summary.quantity"
-        size="2xl"
+  <ClientOnly>
+    <UChip
+      :text="cart.summary.quantity"
+      :show="cart.isInitialized && !!cart.summary.quantity"
+      size="2xl"
+    >
+      <UILinkButton
+        :button="{ icon: 'i-heroicons-shopping-bag' }"
+        to="/cart"
       >
-        <UButton
-          color="gray"
-          icon="i-heroicons-shopping-bag"
-          variant="link"
-          >Cart</UButton
-        >
-      </UChip>
-      <template #fallback>
-        <UButton
-          color="gray"
-          variant="link"
-          icon="i-heroicons-shopping-bag"
-          >Cart</UButton
-        >
-      </template>
-    </ClientOnly>
-  </NuxtLink>
+        Cart
+      </UILinkButton>
+    </UChip>
+    <template #fallback>
+      <UILinkButton
+        :button="{ icon: 'i-heroicons-shopping-bag' }"
+        to="/cart"
+      >
+        Cart
+      </UILinkButton>
+    </template>
+  </ClientOnly>
 </template>

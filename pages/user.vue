@@ -17,14 +17,12 @@ watch(user, (value, oldValue) => {
       >
         <div class="size-10">User: {{ user?.email }}</div>
         <div class="mt-8">
-          <NuxtLink to="/user/orders">
-            <UButton
-              variant="link"
-              color="white"
-              icon="i-heroicons-inbox-stack"
-              >Orders</UButton
-            >
-          </NuxtLink>
+          <UILinkButton
+            :button="{ icon: 'i-heroicons-inbox-stack' }"
+            to="/user/orders"
+          >
+            Orders
+          </UILinkButton>
         </div>
       </div>
       <div>
