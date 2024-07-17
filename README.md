@@ -14,6 +14,8 @@ Nuxt3-marketplace is Full Stack application simulating an online store where the
 - Products filtering
 - Adding to cart
 - Order creation
+- Theme switching
+- Fully adaptive
 
 ## Project setup
 

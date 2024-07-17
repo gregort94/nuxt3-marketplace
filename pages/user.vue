@@ -1,5 +1,12 @@
 <script lang="ts" setup>
+definePageMeta({ middleware: ['guard-auth-only'] })
 const user = useSupabaseUser()
+
+watch(user, (value, oldValue) => {
+  if (oldValue && !value) {
+    navigateTo('/login')
+  }
+})
 </script>
 
 <template>
