@@ -3,6 +3,9 @@
 > Stack: Nuxt 3, Vue 3, Typescript, TaiwinCSS, Prisma, Nuxt UI, VeeValidate, VueUse
 
 [Demo](https://prismatic-cuchufli-173864.netlify.app/)
+Test user:
+email: testUser@gmail.com
+password: 12345678
 
 ## Project description
 
