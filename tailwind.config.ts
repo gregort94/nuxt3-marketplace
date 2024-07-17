@@ -21,6 +21,7 @@ export default <Partial<Config>>{
         defaultLayoutHeaderHeight: '64px',
         defaultLayoutTopPadding: '64px',
         defaultLayoutContentTopOffset: '128px', // headerHeight + defaultLayoutTopPadding
+        defaultLayoutContentHeight: '192px', // headerHeight + defaultLayoutTopPadding * 2
       },
     },
   },

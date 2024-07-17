@@ -1,21 +1,22 @@
 <script lang="ts" setup>
 import { UseImage } from '@vueuse/components'
-import type { ProductPreview } from '~/types/product'
-
-const resetFilters = () => {
-  navigateTo('/products')
-}
-const filters = useProductFilters()
-const ITEMS_PER_PAGE = 20
-const { list, isLoading, addItems, isAdding, itemsRemain, isNoItems } =
-  useListFetch<ProductPreview>('/api/products', filters, ITEMS_PER_PAGE)
-
-watch(filters, () => {
-  window.scrollTo(0, 0)
-})
+import type { ProductsListSharedState } from '~/pages/products/index.vue'
+const productsListSharedState = inject(
+  'productsListSharedState',
+) as ProductsListSharedState
+const {
+  list,
+  addItems,
+  isLoading,
+  isAdding,
+  isNoItems,
+  itemsRemain,
+  ITEMS_PER_PAGE,
+  resetFilters,
+} = toRefs(productsListSharedState)
 
 const loadingItemsAmount = computed(() =>
-  itemsRemain.value && itemsRemain.value < ITEMS_PER_PAGE
+  itemsRemain.value && itemsRemain.value < ITEMS_PER_PAGE.value
     ? itemsRemain.value
     : ITEMS_PER_PAGE,
 )
@@ -69,5 +70,6 @@ const loadingItemsAmount = computed(() =>
         <UButton @click="resetFilters">Reset Filters</UButton>
       </div>
     </div>
+    <VInfiniteScrollContainer />
   </VInfiniteScrollContainer>
 </template>

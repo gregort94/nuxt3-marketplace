@@ -10,16 +10,20 @@ const cart = useCart()
         :show="cart.isInitialized && !!cart.summary.quantity"
         size="2xl"
       >
-        <NavigationButton
-          icon-name="i-heroicons-shopping-bag"
-          text="Cart"
-        />
+        <UButton
+          color="gray"
+          icon="i-heroicons-shopping-bag"
+          variant="link"
+          >Cart</UButton
+        >
       </UChip>
       <template #fallback>
-        <NavigationButton
-          icon-name="i-heroicons-shopping-bag"
-          text="Cart"
-        />
+        <UButton
+          color="gray"
+          variant="link"
+          icon="i-heroicons-shopping-bag"
+          >Cart</UButton
+        >
       </template>
     </ClientOnly>
   </NuxtLink>

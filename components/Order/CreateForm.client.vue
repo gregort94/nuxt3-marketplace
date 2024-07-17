@@ -18,7 +18,7 @@ const onSubmit = async (formFields: ModelToCreate<Order>) => {
         quantity: item.quantity,
       })),
     })
-    navigateTo('/orders')
+    navigateTo('/user/orders')
     notifier.success('Order created')
   } finally {
     isPending.value = false
